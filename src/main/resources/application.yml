@@ -1,0 +1,12 @@
+server:
+  port: 8088
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cheeper
+    username: root
+    password: cheeper
