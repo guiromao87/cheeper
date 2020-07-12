@@ -19,9 +19,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cadastra").permitAll()
                 .anyRequest().authenticated()
             .and()
-                .formLogin();
+                .formLogin()
+            .and()
+                .logout();
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
