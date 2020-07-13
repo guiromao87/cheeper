@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
+    <h2>Creeper Network</h2>
     <form th:action="@{/login}" method="post">
-        Email : <input type="text" name="username"/>
-        Password: <input type="password" name="password"/>
-        <input type="submit" value="Login"/>
+        <div>Email : <input type="text" name="username"/></div>
+        <div>Password: <input type="password" name="password"/></div>
+        <div><input type="submit" value="Login"/></div>
     </form>
+    <br />
+    <br />
+    <a th:href="@{/registry}">Registry</a>
 </body>
 </html>
