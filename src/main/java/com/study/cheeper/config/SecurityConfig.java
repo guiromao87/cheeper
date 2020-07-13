@@ -23,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/cadastra").permitAll()
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
             .and()
-                .formLogin()
+                .formLogin().loginPage("/login")
             .and()
                 .logout();
     }
