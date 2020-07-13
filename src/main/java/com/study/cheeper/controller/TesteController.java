@@ -1,4 +1,4 @@
-package com.study.cheeper.controllers;
+package com.study.cheeper.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
