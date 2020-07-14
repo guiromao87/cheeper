@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 @Entity
@@ -11,9 +12,17 @@ public class User implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotBlank(message = "Email obrigatório")
     private String email;
+
+    @NotBlank(message = "Senha obrigatória")
     private String password;
+
+    @NotBlank(message = "Nome obrigatório")
     private String name;
+
+    @NotBlank(message = "Bio obrigatória")
     private String bio;
 
     public Integer getId() { return id; }

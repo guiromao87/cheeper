@@ -2,11 +2,25 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <body>
 <h2>Registry</h2>
-<form th:action="@{/registry}" method="post">
-    Nome: <input type="text" name="name"/>
-    Email : <input type="text" name="email"/>
-    Bio: <input type="text" name="bio"/>
-    Password: <input type="password" name="password"/>
+
+
+<form th:action="@{/registry}" th:object="${user}" method="post">
+    Nome: <input type="text" th:field="*{name}" />
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+
+    <br />
+    Email : <input type="text" th:field="*{email}" />
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+    <br />
+
+    Bio: <input type="text" th:field="*{bio}" />
+    <span th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}" />
+    <br />
+
+    Password: <input type="password" th:field="*{password}" />
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+    <br />
+
     <input type="submit" value="Registry"/>
 </form>
 </body>
