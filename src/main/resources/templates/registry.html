@@ -3,7 +3,9 @@
 <body>
 <h2>Registry</h2>
 <form th:action="@{/registry}" method="post">
+    Nome: <input type="text" name="name"/>
     Email : <input type="text" name="email"/>
+    Bio: <input type="text" name="bio"/>
     Password: <input type="password" name="password"/>
     <input type="submit" value="Registry"/>
 </form>
