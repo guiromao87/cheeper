@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -21,7 +23,9 @@ public class UserController {
     }
 
     @PostMapping("/registry")
-    public void registry(User user) {
+    public String registry(User user, RedirectAttributes redirectAttributes) {
         this.userService.save(user);
+        redirectAttributes.addFlashAttribute("success", "Registro efetuado com sucesso");
+        return "redirect:login";
     }
 }
