@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/registry")
     public String form(User user) {
-        return "/registry.html";
+        return "/registry";
     }
 
     @PostMapping("/registry")

@@ -1,6 +1,8 @@
 server:
   port: 8088
 spring:
+  thymeleaf:
+    suffix: .html
   jpa:
     show-sql: true
     hibernate:
