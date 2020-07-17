@@ -3,9 +3,10 @@ package com.study.cheeper.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -14,18 +15,9 @@ public class User implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotBlank(message = "Email obrigatório")
-    @Email(message = "Formato incorreto")
     private String email;
-
-    @NotBlank(message = "Senha obrigatória")
     private String password;
-
-    @NotBlank(message = "Nome obrigatório")
     private String name;
-
-    @NotBlank(message = "Bio obrigatória")
     private String bio;
 
     public Integer getId() { return id; }

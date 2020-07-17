@@ -4,7 +4,7 @@
 <h2>Registry</h2>
 
 
-<form th:action="@{/registry}" th:object="${user}" method="post">
+<form th:action="@{/registry}" th:object="${newUserForm}" method="post">
     Nome: <input type="text" th:field="*{name}" />
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
 
