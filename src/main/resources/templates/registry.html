@@ -17,8 +17,12 @@
     <span th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}" />
     <br />
 
-    Password: <input type="password" th:field="*{password}" />
+    Senha: <input type="password" th:field="*{password}" />
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+    <br />
+
+    Confirma Senha: <input type="password" th:field="*{confirmPassword}" />
+    <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" />
     <br />
 
     <input type="submit" value="Registry"/>
