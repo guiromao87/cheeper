@@ -1,12 +1,14 @@
 server:
   port: 8088
 spring:
+  thymeleaf:
+    suffix: .html
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: validate
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cheeper
+    url: jdbc:mysql://localhost:3306/cheeper?createDatabaseIfNotExist=true
     username: root
     password: cheeper
