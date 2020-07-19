@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
-    <h2>Creeper Network</h2>
+    <h2>Rede Social - Creeper</h2>
     <p th:text="${success}"></p>
     <form th:action="@{/login}" method="post">
         <div>Email : <input type="text" name="username"/></div>
-        <div>Password: <input type="password" name="password"/></div>
-        <div><input type="submit" value="Login"/></div>
+        <div>Senha: <input type="password" name="password"/></div>
+        <div><input type="submit" value="Entrar"/></div>
     </form>
     <br />
     <br />
-    <a th:href="@{/registry}">Registry</a>
+    <a th:href="@{/registry}">Cadastro</a>
 </body>
 </html>
