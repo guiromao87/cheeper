@@ -29,7 +29,7 @@
     <ul style="list-style-type: none;" th:each="cheep : ${cheep}">
         <li>
             <div>
-                <span th:text="${cheep.date}" />: <b><span th:text="${cheep.message}" /></b>
+                <span th:text="${#temporals.format(cheep.date, 'dd-MM-yy HH:mm')}" />: <b><span th:text="${cheep.message}" /></b>
 
                 <form th:action="@{/cheep/delete}" method="post">
                     <input type="hidden" th:value="${cheep.id}" name="id" />
