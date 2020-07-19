@@ -26,5 +26,15 @@
     </form>
 
 
+    <ul style="list-style-type: none;" th:each="cheep : ${cheep}">
+        <li>
+            <div>
+                <span th:text="${cheep.date}" />: <b><span th:text="${cheep.message}" /></b>
+
+
+            </div>
+        </li>
+
+    </ul>
 </body>
 </html>
