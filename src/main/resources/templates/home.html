@@ -5,8 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-    <span sec:authentication="name" />
+    <p>
+        <span>Olá </span>
+        <span sec:authentication="name" />
+        <span> - </span>
+        <a th:href="@{/logout}">sair</a>
+    </p>
 
-    <a th:href="@{/logout}">sair</a>
+    <form>
+        <div>
+            <textarea cols="50" rows="3" maxlength="180" placeholder="post um cheep..."></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Cheep">
+        </div>
+    </form>
+
+
 </body>
 </html>
