@@ -30,4 +30,10 @@ public class CheepController {
         return "redirect:home";
     }
 
+    @PostMapping("/delete")
+    public String delete(Cheep id) {
+        cheepRepository.delete(id);
+        return "redirect:/home";
+    }
+
 }
