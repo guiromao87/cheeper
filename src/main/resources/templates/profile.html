@@ -10,7 +10,13 @@
     <div style="height: 100px; width: 100px;border-radius: 50px;">
         <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="@{/default.png}">
     </div>
-    
+    <br />
+    <div>
+        <form th:action="@{/profile/edit}" method="post">
+            <input type="hidden" th:value="${user.id}" name="id" />
+            <input type="submit" value="Configurar perfil">
+        </form>
+    </div>
 
 
     <br />
