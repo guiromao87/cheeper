@@ -66,6 +66,7 @@ public class NewUserForm {
         user.setEmail(this.email);
         user.setPassword(passwordEncoder.encode(this.password));
         user.setBio(this.bio);
+        user.setImage("https://cheeper.s3.amazonaws.com/default.png");
         return user;
     }
 }
