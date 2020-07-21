@@ -20,7 +20,7 @@ public class HomeController {
 
         ModelAndView mv = new ModelAndView("/home");
         mv.addObject("autor",user);
-        mv.addObject("cheep", cheepRepository.findAll());
+        mv.addObject("cheep", cheepRepository.findByAutorId(user.getId()));
 
         return mv;
     }
