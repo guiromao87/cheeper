@@ -20,6 +20,9 @@ public class ProfileController {
     public ModelAndView profile(@PathVariable("id") int id) {
         Optional<User> optional = this.userRepository.findById(id);
 
+        if(!optional.isPresent())
+            return new ModelAndView("/404");
+
         ModelAndView mv = new ModelAndView("/profile");
         mv.addObject("user", optional.get());
         return mv;
