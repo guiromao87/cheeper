@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <body>
-<h2>Registry</h2>
+<h2>Cadastro de Usuário</h2>
 
 
 <form th:action="@{/registry}" th:object="${newUserForm}" method="post">
@@ -9,7 +9,7 @@
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
 
     <br />
-    Email : <input type="text" th:field="*{email}" />
+    Email: <input type="text" th:field="*{email}" />
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
     <br />
 
@@ -25,7 +25,7 @@
     <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" />
     <br />
 
-    <input type="submit" value="Registry"/>
+    <input type="submit" value="Cadastra"/>
 </form>
 </body>
 </html>
