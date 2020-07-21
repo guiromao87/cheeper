@@ -40,6 +40,10 @@ public class User implements UserDetails {
 
     public void setBio(String bio) { this.bio = bio; }
 
+    public List<Cheep> getCheepers() {
+        return Collections.unmodifiableList(cheepers);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
      return Collections.emptyList();
