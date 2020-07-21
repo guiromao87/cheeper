@@ -6,7 +6,16 @@
 </head>
 <body>
     <h2><span th:text="${user.name}"/></h2>
+
+    <div style="height: 100px; width: 100px;border-radius: 50px;">
+        <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="@{/default.png}">
+    </div>
+    
+
+
+    <br />
     <span th:text="${user.cheepers.size()}"/> cheeps
+
 
 
     <br /><br />
