@@ -7,7 +7,7 @@
 <body>
     <p>
         <span>Olá </span>
-        <span sec:authentication="name" />
+        <a th:href="@{/profile/{id}(id = ${autor.id})}">  <span sec:authentication="name" /> </a>
         <span> - </span>
         <a th:href="@{/logout}">sair</a>
     </p>
