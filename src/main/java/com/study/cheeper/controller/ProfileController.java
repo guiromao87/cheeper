@@ -1,14 +1,19 @@
 package com.study.cheeper.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.study.cheeper.model.User;
 import com.study.cheeper.repository.UserRepository;
+import com.study.cheeper.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -16,6 +21,12 @@ public class ProfileController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProfileService profileService;
+
+    @Autowired
+    private AmazonS3 amazonS3;
 
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") int id) {
@@ -29,9 +40,10 @@ public class ProfileController {
         return mv;
     }
 
-    @PostMapping("/profile/edit")
-    public String edit(Integer id) {
-        return "/edit";
+    @PostMapping("/profile/upload")
+    public ModelAndView upload(Integer id, @RequestParam("image") MultipartFile image) throws IOException {
+        profileService.uploadProfileImage(id, image);
+        return profile(id);
     }
 
 }

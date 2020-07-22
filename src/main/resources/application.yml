@@ -13,6 +13,8 @@ spring:
     username: root
     password: cheeper
 
+url:
+  bucket: https://cheeper.s3.amazonaws.com/
 
 aws:
   s3:

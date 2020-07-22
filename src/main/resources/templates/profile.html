@@ -16,18 +16,15 @@
         <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${user.image}">
     </div>
     <br />
-    <div>
-        <form th:action="@{/profile/edit/form}" method="post">
-            <input type="hidden" th:value="${user.id}" name="id" />
-            <input type="submit" value="Configurar perfil">
-        </form>
-    </div>
 
+    <form th:action="@{/profile/upload}" enctype="multipart/form-data" method="post">
+        <input type="hidden" th:value="${user.id}" name="id" />
+        <input type="file" name="image"/><br />
+        <input type="submit" value="Trocar imagem">
+    </form>
 
     <br />
     <span th:text="${user.cheepers.size()}"/> cheeps
-
-
 
     <br /><br />
     <div>

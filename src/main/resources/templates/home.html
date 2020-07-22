@@ -8,10 +8,7 @@
     <p>
         <span>Olá </span>
         <a th:href="@{/profile/{id}(id = ${autor.id})}">  <span sec:authentication="name" /> </a>
-        <span> - </span>
-        <a th:href="@{/logout}">sair</a>
     </p>
-
 
     <span th:text="${success}" />
     <form th:action="@{/cheep}" method="post">
@@ -35,12 +32,11 @@
                     <input type="hidden" th:value="${cheep.id}" name="id" />
                     <input type="submit" value="Excluir" />
                 </form>
-
-
-
             </div>
         </li>
-
     </ul>
+    <br />
+    <br />
+    <a th:href="@{/logout}">sair</a>
 </body>
 </html>
