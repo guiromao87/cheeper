@@ -2,6 +2,7 @@ package com.study.cheeper.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.study.cheeper.model.User;
+import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ProfileController {
             return new ModelAndView("/404");
 
         ModelAndView mv = new ModelAndView("/profile");
-        mv.addObject("user", optional.get());
+        mv.addObject("user", new UserDto(optional.get()));
         return mv;
     }
 
