@@ -8,8 +8,10 @@ public class Cheep {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(columnDefinition = "text")
     private String message;
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime creation = LocalDateTime.now();
 
     @ManyToOne
     private User autor;
@@ -30,9 +32,7 @@ public class Cheep {
         this.message = message;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
+    public LocalDateTime getCreation() { return creation; }
 
     public User getAutor() {
         return autor;

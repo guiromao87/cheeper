@@ -12,3 +12,12 @@ spring:
     url: jdbc:mysql://localhost:3306/cheeper?createDatabaseIfNotExist=true
     username: root
     password: cheeper
+
+url:
+  bucket: https://cheeper.s3.amazonaws.com/
+
+aws:
+  s3:
+    access-key: ${ACCESS_KEY}
+    secret-key: ${SECRET_KEY}
+    region: ${REGION}

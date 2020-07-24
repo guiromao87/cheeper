@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Login - Cheeper</title>
+</head>
 <body>
-    <h2>Rede Social - Creeper</h2>
+    <h2>Rede Social - Cheeper</h2>
     <p th:text="${success}"></p>
     <form th:action="@{/login}" method="post">
         <div>Email : <input type="text" name="username"/></div>

@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home - Cheeper</title>
 </head>
 <body>
     <p>
         <span>Olá </span>
-        <span sec:authentication="name" />
-        <span> - </span>
-        <a th:href="@{/logout}">sair</a>
+        <a th:href="@{/profile/{id}(id = ${autor.id})}">  <span sec:authentication="name" /> </a>
     </p>
-
 
     <span th:text="${success}" />
     <form th:action="@{/cheep}" method="post">
 
         <input type="hidden" th:value="${autor.id}" name="idAutor" />
         <div>
-            <textarea name="message" cols="50" rows="3" maxlength="180" placeholder="post um cheep..."></textarea>
+            <textarea name="message" cols="50" rows="3" maxlength="280" placeholder="post um cheep..."></textarea>
         </div>
         <div>
             <input type="submit" value="Cheep">
@@ -26,21 +22,20 @@
     </form>
 
 
-    <ul style="list-style-type: none;" th:each="cheep : ${cheep}">
+    <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
         <li>
             <div>
-                <span th:text="${#temporals.format(cheep.date, 'dd-MM-yy HH:mm')}" />: <b><span th:text="${cheep.message}" /></b>
+                <span th:text="${#temporals.format(cheep.creation, 'dd-MM-yy HH:mm')}" />: <b><span th:text="${cheep.message}" /></b>
 
                 <form th:action="@{/cheep/delete}" method="post">
                     <input type="hidden" th:value="${cheep.id}" name="id" />
                     <input type="submit" value="Excluir" />
                 </form>
-
-
-
             </div>
         </li>
-
     </ul>
+    <br />
+    <br />
+    <a th:href="@{/logout}">sair</a>
 </body>
 </html>

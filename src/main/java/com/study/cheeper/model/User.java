@@ -18,6 +18,7 @@ public class User implements UserDetails {
     private String password;
     private String name;
     private String bio;
+    private String image;
 
     @OneToMany(mappedBy = "autor")
     private List<Cheep> cheepers = new ArrayList<>();
@@ -39,6 +40,14 @@ public class User implements UserDetails {
     public String getBio() { return bio; }
 
     public void setBio(String bio) { this.bio = bio; }
+
+    public List<Cheep> getCheepers() {
+        return Collections.unmodifiableList(cheepers);
+    }
+
+    public String getImage() { return image; }
+
+    public void setImage(String image) { this.image = image; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

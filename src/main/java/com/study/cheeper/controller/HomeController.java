@@ -14,18 +14,14 @@ public class HomeController {
     @Autowired
     private CheepRepository cheepRepository;
 
-    @GetMapping("/home")
+    @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         ModelAndView mv = new ModelAndView("/home");
         mv.addObject("autor",user);
-        mv.addObject("cheep", cheepRepository.findAll());
+        mv.addObject("cheeps", cheepRepository.findByAutorId(user.getId()));
 
         return mv;
     }
-
-    @GetMapping("/")
-    public ModelAndView defaultHome() { return home(); }
-
 }
