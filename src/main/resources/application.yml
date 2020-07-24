@@ -1,6 +1,10 @@
 server:
   port: 8088
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   thymeleaf:
     suffix: .html
   jpa:
