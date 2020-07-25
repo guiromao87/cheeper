@@ -3,6 +3,7 @@ package com.study.cheeper.controller;
 import com.amazonaws.services.s3.AmazonS3;
 import com.study.cheeper.model.User;
 import com.study.cheeper.model.dto.UserDto;
+import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class ProfileController {
     private ProfileService profileService;
 
     @Autowired
+    private CheepRepository cheepRepository;
+
+
+    @Autowired
     private AmazonS3 amazonS3;
 
     @GetMapping("/profile/{id}")
@@ -38,6 +43,7 @@ public class ProfileController {
 
         ModelAndView mv = new ModelAndView("/profile");
         mv.addObject("user", new UserDto(optional.get()));
+        mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(id));
         return mv;
     }
 
