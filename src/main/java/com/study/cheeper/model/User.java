@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +20,8 @@ public class User implements UserDetails {
     private String name;
     private String bio;
     private String image;
+    private LocalDate created = LocalDate.now();
+    private String profileName;
 
     @OneToMany(mappedBy = "autor", fetch = FetchType.EAGER)
     private List<Cheep> cheepers = new ArrayList<>();
@@ -50,6 +53,12 @@ public class User implements UserDetails {
     public void setImage(String image) { this.image = image; }
 
     public int getNumberOfCheeps() { return this.cheepers.size(); }
+
+    public LocalDate getCreated() { return created; }
+
+    public String getProfileName() { return profileName; }
+
+    public void setProfileName(String profileName) { this.profileName = profileName; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
