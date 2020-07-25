@@ -43,7 +43,9 @@ public class ProfileController {
 
     @PostMapping("/profile/upload")
     public ModelAndView upload(Integer id, @RequestParam("image") MultipartFile image) throws IOException {
-        profileService.uploadProfileImage(id, image);
+        if(image.getSize() > 0)
+            profileService.uploadProfileImage(id, image);
+
         return profile(id);
     }
 
