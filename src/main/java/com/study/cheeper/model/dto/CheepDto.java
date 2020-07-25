@@ -3,6 +3,7 @@ package com.study.cheeper.model.dto;
 import com.study.cheeper.model.Cheep;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class CheepDto {
     public LocalDateTime getCreation() { return creation; }
 
     public String getMessage() { return message; }
+
+    public String getFormattedCreation() { return this.creation.format(DateTimeFormatter.ofPattern("dd-MM-yy HH:mm")); }
 
     public static List<CheepDto> toCheepsDto(List<Cheep> cheeps) {
         List<CheepDto> cheepDtos = new ArrayList<>();
