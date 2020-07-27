@@ -42,7 +42,7 @@ public class ProfileController {
             return new ModelAndView("/404");
 
         ModelAndView mv = new ModelAndView("/profile");
-        mv.addObject("user", new UserDto(optional.get()));
+        mv.addObject("profile", new UserDto(optional.get()));
         mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(id));
         return mv;
     }

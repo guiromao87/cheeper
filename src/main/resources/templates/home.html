@@ -6,13 +6,13 @@
 <body>
     <p>
         <span>Olá </span>
-        <a th:href="@{/profile/{id}(id = ${autor.id})}">  <span sec:authentication="name" /> </a>
+        <a th:href="@{/profile/{id}(id = ${profile.id})}">  <span sec:authentication="name" /> </a>
     </p>
 
     <span th:text="${success}" />
     <form th:action="@{/cheep}" method="post">
 
-        <input type="hidden" th:value="${autor.id}" name="idAutor" />
+        <input type="hidden" th:value="${profile.id}" name="idAutor" />
         <div>
             <textarea name="message" cols="50" rows="3" maxlength="280" placeholder="post um cheep..."></textarea>
         </div>
