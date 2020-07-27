@@ -34,25 +34,26 @@ public class ProfileController {
     @Autowired
     private AmazonS3 amazonS3;
 
-    @GetMapping("/profile/{id}")
-    public ModelAndView profile(@PathVariable("id") int id) {
-        Optional<User> optional = this.userRepository.findById(id);
+    @GetMapping("/{profileName}")
+    public ModelAndView profile(@PathVariable("profileName") String profileName) {
+        Optional<User> optional = this.userRepository.findByProfileName(profileName);
 
         if(!optional.isPresent())
             return new ModelAndView("/404");
 
+        User user = optional.get();
         ModelAndView mv = new ModelAndView("/profile");
-        mv.addObject("profile", new UserDto(optional.get()));
-        mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(id));
+        mv.addObject("profile", new UserDto(user));
+        mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(user.getId()));
         return mv;
     }
 
-    @PostMapping("/profile/upload")
-    public ModelAndView upload(Integer id, @RequestParam("image") MultipartFile image) throws IOException {
+    @PostMapping("/{profileName}/upload")
+    public ModelAndView upload(@PathVariable("profileName") String profileName ,Integer id, @RequestParam("image") MultipartFile image) throws IOException {
         if(image.getSize() > 0)
             profileService.uploadProfileImage(id, image);
 
-        return profile(id);
+        return profile(profileName);
     }
 
 }

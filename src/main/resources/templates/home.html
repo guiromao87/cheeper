@@ -6,7 +6,11 @@
 <body>
     <p>
         <span>Olá </span>
-        <a th:href="@{/profile/{id}(id = ${profile.id})}">  <span sec:authentication="name" /> </a>
+        <a th:href="@{/{profileName}(profileName = ${profile.profileName})}">
+            <span th:text="${profile.name}" />
+        </a>
+        (<span th:text="${profile.formattedProfileName}" />)
+
     </p>
 
     <span th:text="${success}" />
