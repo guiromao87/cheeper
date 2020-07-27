@@ -20,4 +20,8 @@ public class UserService {
         User newUser = newUserForm.toUser(passwordEncoder);
         this.userRepository.save(newUser);
     }
+
+    public boolean isProfileNameInUse(String profileName) {
+        return userRepository.existsByProfileName(profileName);
+    }
 }

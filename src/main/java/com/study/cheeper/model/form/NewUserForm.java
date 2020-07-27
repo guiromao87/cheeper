@@ -1,6 +1,7 @@
 package com.study.cheeper.model.form;
 
 import com.study.cheeper.model.User;
+import com.study.cheeper.validator.ProfileNameUnique;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
@@ -17,6 +18,10 @@ public class NewUserForm {
 
     @NotBlank(message = "Confirme sua senha")
     private String confirmPassword;
+
+    @ProfileNameUnique(message = "Esse nome já está sendo utilizado")
+    @NotBlank(message = "Nome do perfil é obrigatório")
+    private String profileName;
 
     @NotBlank(message = "Nome obrigatório")
     private String name;
@@ -39,6 +44,10 @@ public class NewUserForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getProfileName() { return profileName; }
+
+    public void setProfileName(String profileName) { this.profileName = profileName; }
 
     public String getName() {
         return name;
@@ -66,6 +75,7 @@ public class NewUserForm {
         user.setEmail(this.email);
         user.setPassword(passwordEncoder.encode(this.password));
         user.setBio(this.bio);
+        user.setProfileName(this.profileName);
         user.setImage("https://cheeper.s3.amazonaws.com/default.png");
         return user;
     }
