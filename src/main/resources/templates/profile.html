@@ -15,12 +15,14 @@
         <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
     </div>
     <br />
-
-    <form th:action="@{/{profileName}/upload (profileName = ${profile.profileName})}" enctype="multipart/form-data" method="post">
-        <input type="hidden" th:value="${profile.id}" name="id" />
-        <input type="file" name="image"/><br />
-        <input type="submit" value="Trocar imagem">
-    </form>
+    <br />
+    <div th:if="${#authentication.name} == ${profile.email}">
+        <form th:action="@{/{profileName}/upload (profileName = ${profile.profileName})}" enctype="multipart/form-data" method="post">
+            <input type="hidden" th:value="${profile.id}" name="id" />
+            <input type="file" name="image"/><br />
+            <input type="submit" value="Trocar imagem">
+        </form>
+    </div>
 
     <br />
     <span th:text="${numberOfCheeps}"/> cheeps

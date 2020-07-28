@@ -9,6 +9,7 @@ public class UserDto {
     private String bio;
     private String image;
     private String profileName;
+    private String email;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -16,6 +17,7 @@ public class UserDto {
         this.bio = user.getBio();
         this.image = user.getImage();
         this.profileName = user.getProfileName();
+        this.email = user.getEmail();
     }
 
     public Integer getId() { return id; }
@@ -29,4 +31,6 @@ public class UserDto {
     public String getProfileName() { return profileName; }
 
     public String getFormattedProfileName() { return "@" + profileName; }
+
+    public String getEmail() { return email; }
 }
