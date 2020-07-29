@@ -1,7 +1,9 @@
 package com.study.cheeper.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.study.cheeper.model.Cheep;
 import com.study.cheeper.model.User;
+import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,7 +33,6 @@ public class ProfileController {
     @Autowired
     private CheepRepository cheepRepository;
 
-
     @Autowired
     private AmazonS3 amazonS3;
 
@@ -42,10 +44,18 @@ public class ProfileController {
             return new ModelAndView("/404");
 
         User user = optional.get();
+        List<Cheep> cheepsByProfile = this.cheepRepository.findByAutorId(user.getId());
+
         ModelAndView mv = new ModelAndView("/profile");
         mv.addObject("profile", new UserDto(user));
+        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepsByProfile));
         mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(user.getId()));
         return mv;
+    }
+
+    @GetMapping("/follow/{profileName}")
+    public ModelAndView follow(@PathVariable String profileName) {
+        return new ModelAndView("/follow.html");
     }
 
     @PostMapping("/{profileName}/upload")
