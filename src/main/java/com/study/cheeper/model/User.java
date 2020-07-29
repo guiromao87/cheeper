@@ -3,13 +3,12 @@ package com.study.cheeper.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class User implements UserDetails {
@@ -23,6 +22,20 @@ public class User implements UserDetails {
     private String image;
     private LocalDate created = LocalDate.now();
     private String profileName;
+
+    @ManyToMany
+    @JoinTable(name="relationship",
+            joinColumns=@JoinColumn(name="follower_id"),
+            inverseJoinColumns=@JoinColumn(name="followed_id"))
+    private List<User> Following = new ArrayList<>();
+
+    public List<User> getFollowing() {
+        return Following;
+    }
+
+    public void setFollowing(List<User> following) {
+        Following = following;
+    }
 
     public Integer getId() { return id; }
 

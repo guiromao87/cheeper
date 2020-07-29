@@ -9,6 +9,7 @@ import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,10 @@ public class ProfileController {
     @Autowired
     private AmazonS3 amazonS3;
 
+    @Autowired @Lazy
+    private User loggedUser;
+
+
     @GetMapping("/{profileName}")
     public ModelAndView profile(@PathVariable("profileName") String profileName) {
         Optional<User> optional = this.userRepository.findByProfileName(profileName);
@@ -58,12 +63,14 @@ public class ProfileController {
         return new ModelAndView("/follow.html");
     }
 
-    @PostMapping("/{profileName}/upload")
-    public ModelAndView upload(@PathVariable("profileName") String profileName ,Integer id, @RequestParam("image") MultipartFile image) throws IOException {
-        if(image.getSize() > 0)
-            profileService.uploadProfileImage(id, image);
+    @PostMapping("/upload")
+    public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
+        User user = loggedUser;
 
-        return profile(profileName);
+        if(image.getSize() > 0)
+            profileService.uploadProfileImage(user.getId(), image);
+
+        return profile(user.getProfileName());
     }
 
 }

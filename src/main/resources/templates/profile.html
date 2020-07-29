@@ -40,8 +40,7 @@
         </ul>
     </div>
     <div th:if="${#authentication.name} == ${profile.email}">
-        <form th:action="@{/{profileName}/upload (profileName = ${profile.profileName})}" enctype="multipart/form-data" method="post">
-            <input type="hidden" th:value="${profile.id}" name="id" />
+        <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
             <input type="file" name="image"/><br />
             <input type="submit" value="Trocar imagem">
         </form>

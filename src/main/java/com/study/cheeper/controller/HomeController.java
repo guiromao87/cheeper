@@ -5,6 +5,9 @@ import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.repository.CheepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +19,12 @@ public class HomeController {
     @Autowired
     private CheepRepository cheepRepository;
 
+    @Autowired @Lazy
+    private User loggedUser;
+
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = loggedUser;
 
         ModelAndView mv = new ModelAndView("/home");
         mv.addObject("profile", new UserDto(user));
