@@ -7,23 +7,23 @@
     <div>
         <a th:href="@{/home}">home</a>
     </div>
-    <h2><span th:text="${user.name}"/></h2>
-    <span th:text="${user.bio}"/>
+    <h2><span th:text="${profile.name}"/></h2>
+    <span th:text="${profile.bio}"/>
 
     <br />
     <div style="height: 100px; width: 100px;border-radius: 50px;">
-        <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${user.image}">
+        <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
     </div>
     <br />
 
-    <form th:action="@{/profile/upload}" enctype="multipart/form-data" method="post">
-        <input type="hidden" th:value="${user.id}" name="id" />
+    <form th:action="@{/{profileName}/upload (profileName = ${profile.profileName})}" enctype="multipart/form-data" method="post">
+        <input type="hidden" th:value="${profile.id}" name="id" />
         <input type="file" name="image"/><br />
         <input type="submit" value="Trocar imagem">
     </form>
 
     <br />
-    <span th:text="${user.cheepers.size()}"/> cheeps
+    <span th:text="${numberOfCheeps}"/> cheeps
 
     <br /><br />
     <div>

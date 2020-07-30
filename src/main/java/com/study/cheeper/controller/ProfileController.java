@@ -2,6 +2,8 @@ package com.study.cheeper.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.study.cheeper.model.User;
+import com.study.cheeper.model.dto.UserDto;
+import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,24 +28,32 @@ public class ProfileController {
     private ProfileService profileService;
 
     @Autowired
+    private CheepRepository cheepRepository;
+
+
+    @Autowired
     private AmazonS3 amazonS3;
 
-    @GetMapping("/profile/{id}")
-    public ModelAndView profile(@PathVariable("id") int id) {
-        Optional<User> optional = this.userRepository.findById(id);
+    @GetMapping("/{profileName}")
+    public ModelAndView profile(@PathVariable("profileName") String profileName) {
+        Optional<User> optional = this.userRepository.findByProfileName(profileName);
 
         if(!optional.isPresent())
             return new ModelAndView("/404");
 
+        User user = optional.get();
         ModelAndView mv = new ModelAndView("/profile");
-        mv.addObject("user", optional.get());
+        mv.addObject("profile", new UserDto(user));
+        mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(user.getId()));
         return mv;
     }
 
-    @PostMapping("/profile/upload")
-    public ModelAndView upload(Integer id, @RequestParam("image") MultipartFile image) throws IOException {
-        profileService.uploadProfileImage(id, image);
-        return profile(id);
+    @PostMapping("/{profileName}/upload")
+    public ModelAndView upload(@PathVariable("profileName") String profileName ,Integer id, @RequestParam("image") MultipartFile image) throws IOException {
+        if(image.getSize() > 0)
+            profileService.uploadProfileImage(id, image);
+
+        return profile(profileName);
     }
 
 }

@@ -13,6 +13,10 @@
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
 
     <br />
+    Nome do Perfil: <input type="text" th:field="*{profileName}" />
+    <span th:if="${#fields.hasErrors('profileName')}" th:errors="*{profileName}" />
+
+    <br />
     Email: <input type="text" th:field="*{email}" />
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
     <br />

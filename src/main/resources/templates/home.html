@@ -6,13 +6,17 @@
 <body>
     <p>
         <span>Olá </span>
-        <a th:href="@{/profile/{id}(id = ${autor.id})}">  <span sec:authentication="name" /> </a>
+        <a th:href="@{/{profileName}(profileName = ${profile.profileName})}">
+            <span th:text="${profile.name}" />
+        </a>
+        (<span th:text="${profile.formattedProfileName}" />)
+
     </p>
 
     <span th:text="${success}" />
     <form th:action="@{/cheep}" method="post">
 
-        <input type="hidden" th:value="${autor.id}" name="idAutor" />
+        <input type="hidden" th:value="${profile.id}" name="idAutor" />
         <div>
             <textarea name="message" cols="50" rows="3" maxlength="280" placeholder="post um cheep..."></textarea>
         </div>
@@ -25,9 +29,9 @@
     <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
         <li>
             <div>
-                <span th:text="${#temporals.format(cheep.creation, 'dd-MM-yy HH:mm')}" />: <b><span th:text="${cheep.message}" /></b>
+                <span th:text="${cheep.formattedCreation}" />: <b><span th:text="${cheep.message}" /></b>
 
-                <form th:action="@{/cheep/delete}" method="post">
+                <form th:action="@{/cheep}" th:method="delete">
                     <input type="hidden" th:value="${cheep.id}" name="id" />
                     <input type="submit" value="Excluir" />
                 </form>

@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.study.cheeper.model.User;
 import com.study.cheeper.repository.UserRepository;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,9 +27,12 @@ public class ProfileService {
 
 
     public void uploadProfileImage(Integer id, MultipartFile image) throws IOException {
+        String imageName = id + "/" + image.getOriginalFilename();
+
+
         PutObjectRequest putObjectRequest =
                 new PutObjectRequest("cheeper",
-                        image.getOriginalFilename(),
+                        imageName,
                         image.getInputStream(),
                         new ObjectMetadata());
 
@@ -38,7 +40,7 @@ public class ProfileService {
         amazonS3.putObject(putObjectRequest);
 
         User user = userRepository.getOne(id);
-        user.setImage(bucketUrl + image.getOriginalFilename());
+        user.setImage(bucketUrl + imageName);
         userRepository.save(user);
     }
 }

@@ -1,6 +1,8 @@
 package com.study.cheeper.controller;
 
 import com.study.cheeper.model.User;
+import com.study.cheeper.model.dto.CheepDto;
+import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.repository.CheepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,8 +21,8 @@ public class HomeController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         ModelAndView mv = new ModelAndView("/home");
-        mv.addObject("autor",user);
-        mv.addObject("cheeps", cheepRepository.findByAutorId(user.getId()));
+        mv.addObject("profile", new UserDto(user));
+        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepRepository.findByAutorId(user.getId())));
 
         return mv;
     }

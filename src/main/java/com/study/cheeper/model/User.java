@@ -3,11 +3,13 @@ package com.study.cheeper.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Entity
 public class User implements UserDetails {
@@ -19,9 +21,8 @@ public class User implements UserDetails {
     private String name;
     private String bio;
     private String image;
-
-    @OneToMany(mappedBy = "autor")
-    private List<Cheep> cheepers = new ArrayList<>();
+    private LocalDate created = LocalDate.now();
+    private String profileName;
 
     public Integer getId() { return id; }
 
@@ -41,13 +42,15 @@ public class User implements UserDetails {
 
     public void setBio(String bio) { this.bio = bio; }
 
-    public List<Cheep> getCheepers() {
-        return Collections.unmodifiableList(cheepers);
-    }
-
     public String getImage() { return image; }
 
     public void setImage(String image) { this.image = image; }
+
+    public LocalDate getCreated() { return created; }
+
+    public String getProfileName() { return profileName; }
+
+    public void setProfileName(String profileName) { this.profileName = profileName; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
