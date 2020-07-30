@@ -4,8 +4,8 @@ import com.study.cheeper.model.Cheep;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CheepDto {
     private long id;
@@ -27,10 +27,6 @@ public class CheepDto {
     public String getFormattedCreation() { return this.creation.format(DateTimeFormatter.ofPattern("dd-MM-yy HH:mm")); }
 
     public static List<CheepDto> toCheepsDto(List<Cheep> cheeps) {
-        List<CheepDto> cheepDtos = new ArrayList<>();
-
-        cheeps.forEach(cheep -> cheepDtos.add(new CheepDto(cheep)));
-
-        return cheepDtos;
+        return cheeps.stream().map(CheepDto::new).collect(Collectors.toList());
     }
 }
