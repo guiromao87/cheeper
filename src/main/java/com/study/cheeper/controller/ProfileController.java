@@ -49,12 +49,12 @@ public class ProfileController {
             return new ModelAndView("/404");
 
         User user = optional.get();
-        List<Cheep> cheepsByProfile = this.cheepRepository.findByAutorId(user.getId());
+        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(user.getId());
 
         ModelAndView mv = new ModelAndView("/profile");
         mv.addObject("profile", new UserDto(user));
         mv.addObject("cheeps", CheepDto.toCheepsDto(cheepsByProfile));
-        mv.addObject("numberOfCheeps" , this.cheepRepository.countByAutorId(user.getId()));
+        mv.addObject("numberOfCheeps" , this.cheepRepository.countByProfileId(user.getId()));
         return mv;
     }
 

@@ -11,10 +11,10 @@ public class NewCheepForm {
 
     public void setMessage(String message) { this.message = message; }
 
-    public Cheep toCheep(User author) {
+    public Cheep toCheep(User profile) {
         Cheep cheep = new Cheep();
         cheep.setMessage(this.message);
-        cheep.setAutor(author);
+        cheep.setProfile(profile);
 
         return cheep;
     }

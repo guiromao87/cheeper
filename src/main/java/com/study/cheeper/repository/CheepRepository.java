@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface CheepRepository extends JpaRepository<Cheep, Long> {
 
-    List<Cheep> findByAutorId(Integer id);
+    List<Cheep> findByProfileId(Integer id);
 
-    long countByAutorId(Integer id);
-
+    long countByProfileId(Integer id);
 }
