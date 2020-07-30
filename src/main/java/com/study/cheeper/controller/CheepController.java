@@ -36,9 +36,13 @@ public class CheepController {
         return "redirect:home";
     }
 
-    @DeleteMapping()
-    public String delete(Cheep cheep) {
-        cheepRepository.delete(cheep);
+    @DeleteMapping
+    public String delete(Long id) {
+        Cheep toDelete = this.cheepRepository.getOne(id);
+
+        if(toDelete.isOwnedBy(loggedUser))
+            cheepRepository.delete(toDelete);
+
         return "redirect:/home";
     }
 

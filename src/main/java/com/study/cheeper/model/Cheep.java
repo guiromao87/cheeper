@@ -37,4 +37,8 @@ public class Cheep {
     public User getProfile() { return profile; }
 
     public void setProfile(User profile) { this.profile = profile; }
+
+    public boolean isOwnedBy(User loggedUser) {
+        return this.profile.getId().equals(loggedUser.getId());
+    }
 }
