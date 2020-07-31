@@ -54,7 +54,7 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("/profile");
         mv.addObject("profile", new UserDto(user));
         mv.addObject("cheeps", CheepDto.toCheepsDto(cheepsByProfile));
-        mv.addObject("numberOfCheeps" , this.cheepRepository.countByProfileId(user.getId()));
+        mv.addObject("numberOfCheeps" , cheepsByProfile.size());
         return mv;
     }
 
