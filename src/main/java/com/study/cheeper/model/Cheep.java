@@ -14,7 +14,7 @@ public class Cheep {
     private LocalDateTime creation = LocalDateTime.now();
 
     @ManyToOne
-    private User autor;
+    private User profile;
 
     public Long getId() {
         return id;
@@ -34,11 +34,11 @@ public class Cheep {
 
     public LocalDateTime getCreation() { return creation; }
 
-    public User getAutor() {
-        return autor;
-    }
+    public User getProfile() { return profile; }
 
-    public void setAutor(User autor) {
-        this.autor = autor;
+    public void setProfile(User profile) { this.profile = profile; }
+
+    public boolean isOwnedBy(User loggedUser) {
+        return this.profile.getId().equals(loggedUser.getId());
     }
 }

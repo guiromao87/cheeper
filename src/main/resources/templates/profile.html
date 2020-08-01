@@ -7,8 +7,18 @@
     <div>
         <a th:href="@{/home}">home</a>
     </div>
-    <h2><span th:text="${profile.name}"/></h2>
+    <h2>
+        <span th:text="${profile.name}"/>
+        (<span th:text="${profile.formattedProfileName}"/>)
+    </h2>
+    <span th:text="${numberOfCheeps}"/><span th:text="${numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/>
+    <br />
     <span th:text="${profile.bio}"/>
+    <br />
+
+    <div th:if="${#authentication.name} != ${profile.email}">
+        <a th:href="@{/follow/{profileName}(profileName = ${profile.profileName})}">Seguir</a>
+    </div>
 
     <br />
     <div style="height: 100px; width: 100px;border-radius: 50px;">
@@ -16,14 +26,25 @@
     </div>
     <br />
 
-    <form th:action="@{/{profileName}/upload (profileName = ${profile.profileName})}" enctype="multipart/form-data" method="post">
-        <input type="hidden" th:value="${profile.id}" name="id" />
-        <input type="file" name="image"/><br />
-        <input type="submit" value="Trocar imagem">
-    </form>
 
     <br />
-    <span th:text="${numberOfCheeps}"/> cheeps
+    <br />
+    <div th:if="${#authentication.name} != ${profile.email}">
+        <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
+            <li>
+                <div>
+                    <span th:text="${cheep.formattedCreation}" />:
+                    <b><span th:text="${cheep.message}" /></b>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${#authentication.name} == ${profile.email}">
+        <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
+            <input type="file" name="image"/><br />
+            <input type="submit" value="Trocar imagem">
+        </form>
+    </div>
 
     <br /><br />
     <div>

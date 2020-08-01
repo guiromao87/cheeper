@@ -15,8 +15,6 @@
 
     <span th:text="${success}" />
     <form th:action="@{/cheep}" method="post">
-
-        <input type="hidden" th:value="${profile.id}" name="idAutor" />
         <div>
             <textarea name="message" cols="50" rows="3" maxlength="280" placeholder="post um cheep..."></textarea>
         </div>
@@ -24,7 +22,6 @@
             <input type="submit" value="Cheep">
         </div>
     </form>
-
 
     <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
         <li>
