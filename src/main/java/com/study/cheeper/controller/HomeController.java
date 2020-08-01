@@ -24,14 +24,9 @@ public class HomeController {
 
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
-
-
-
-        User user = loggedUser;
-
         ModelAndView mv = new ModelAndView("/home");
-        mv.addObject("profile", new UserDto(user));
-        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepRepository.findByProfileId(user.getId())));
+        mv.addObject("profile", new UserDto(loggedUser));
+        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepRepository.findByProfileId(loggedUser.getId())));
 
         return mv;
     }

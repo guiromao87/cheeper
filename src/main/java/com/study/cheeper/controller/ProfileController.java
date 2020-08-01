@@ -65,12 +65,10 @@ public class ProfileController {
 
     @PostMapping("/upload")
     public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
-        User user = loggedUser;
-
         if(image.getSize() > 0)
-            profileService.uploadProfileImage(user.getId(), image);
+            profileService.uploadProfileImage(loggedUser.getId(), image);
 
-        return profile(user.getProfileName());
+        return profile(loggedUser.getProfileName());
     }
 
 }
