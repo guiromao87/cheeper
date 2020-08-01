@@ -27,15 +27,11 @@ public class User implements UserDetails {
     @JoinTable(name="relationship",
             joinColumns=@JoinColumn(name="follower_id"),
             inverseJoinColumns=@JoinColumn(name="followed_id"))
-    private List<User> Following = new ArrayList<>();
+    private List<User> following = new ArrayList<>();
 
-    public List<User> getFollowing() {
-        return Following;
-    }
+    public List<User> getFollowing() { return Collections.unmodifiableList(following); }
 
-    public void setFollowing(List<User> following) {
-        Following = following;
-    }
+    public void follow(User followed) { this.following.add(followed); }
 
     public Integer getId() { return id; }
 
