@@ -68,7 +68,7 @@ public class ProfileController {
         if(image.getSize() > 0)
             profileService.uploadProfileImage(loggedUser.getId(), image);
 
-        return profile(loggedUser.getProfileName());
+        return new ModelAndView("redirect:/" + loggedUser.getProfileName());
     }
 
 }
