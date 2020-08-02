@@ -15,9 +15,16 @@
     <br />
     <span th:text="${profile.bio}"/>
     <br />
-
+    Seguindo <span th:text="${profile.following}"/>
+    <br />
+    <br />
     <div th:if="${#authentication.name} != ${profile.email}">
-        <a th:href="@{/follow/{profileName}(profileName = ${profile.profileName})}">Seguir</a>
+        <div th:if="${isFollowed} == false">
+            <a id="follow" href="#" onclick="follow()">Seguir</a>
+        </div>
+        <div th:if="${isFollowed} == true">
+            <a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>
+        </div>
     </div>
 
     <br />
@@ -52,4 +59,20 @@
     </div>
 
 </body>
+
+<script th:inline="javascript">
+    function follow() {
+        fetch('/follow', {
+            method: 'POST',
+            body: [[${profile.name}]]
+        }).then(document.querySelector('#follow').outerHTML = '<a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>')
+    }
+
+    function unfollow() {
+        fetch('/unfollow', {
+            method: 'POST',
+            body: [[${profile.name}]]
+        }).then(document.querySelector('#unfollow').outerHTML = '<a id="follow" href="#" onclick="follow()">Seguir</a>')
+    }
+</script>
 </html>

@@ -10,6 +10,7 @@ public class UserDto {
     private String image;
     private String profileName;
     private String email;
+    private int following;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -18,6 +19,7 @@ public class UserDto {
         this.image = user.getImage();
         this.profileName = user.getProfileName();
         this.email = user.getEmail();
+        this.following = user.getFollowing().size();
     }
 
     public Integer getId() { return id; }
@@ -33,4 +35,6 @@ public class UserDto {
     public String getFormattedProfileName() { return "@" + profileName; }
 
     public String getEmail() { return email; }
+
+    public int getFollowing() { return following; }
 }

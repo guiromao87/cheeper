@@ -10,11 +10,11 @@ import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,19 +48,41 @@ public class ProfileController {
         if(!optional.isPresent())
             return new ModelAndView("/404");
 
-        User user = optional.get();
-        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(user.getId());
+        User profile = optional.get();
+
+        boolean isFollowed = false;
+
+        if(profile.isNotTheSameAs(loggedUser) && (loggedUser.isFollowing(profile)))
+            isFollowed = true;
 
         ModelAndView mv = new ModelAndView("/profile");
-        mv.addObject("profile", new UserDto(user));
+
+        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(profile.getId());
+        mv.addObject("profile", new UserDto(profile));
+        mv.addObject("isFollowed", isFollowed);
         mv.addObject("cheeps", CheepDto.toCheepsDto(cheepsByProfile));
         mv.addObject("numberOfCheeps" , cheepsByProfile.size());
         return mv;
     }
 
-    @GetMapping("/follow/{profileName}")
-    public ModelAndView follow(@PathVariable String profileName) {
-        return new ModelAndView("/follow.html");
+    @ResponseBody
+    @PostMapping(value = {"/follow", "/unfollow"})
+    public void followOrUnfollow(@RequestBody String profileName) {
+        User follower = userRepository.getOne(loggedUser.getId());
+        Optional<User> optionalToBeFollowed = userRepository.findByProfileName(profileName);
+
+        if(optionalToBeFollowed.isPresent()) {
+
+            if(follower.getFollowing().contains(optionalToBeFollowed.get()))
+                follower.unfollow(optionalToBeFollowed.get());
+            else
+                follower.follow(optionalToBeFollowed.get());
+
+            User followerSaved = userRepository.save(follower);
+
+            final Authentication auth = new UsernamePasswordAuthenticationToken(followerSaved, null, null);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
     }
 
     @PostMapping("/upload")
@@ -70,5 +92,4 @@ public class ProfileController {
 
         return new ModelAndView("redirect:/" + loggedUser.getProfileName());
     }
-
 }
