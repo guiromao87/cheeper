@@ -14,7 +14,7 @@ public class LoginService {
 
     private String code;
 
-    public void sendTo(String email) {
+    public void sendEmailTo(String email) {
         this.code = generate6DigitsCode();
         this.emailSender.send(email, code);
     }
