@@ -1,5 +1,6 @@
 package com.study.cheeper.service;
 
+import com.study.cheeper.repository.RedisEmailRepository;
 import com.study.cheeper.service.sender.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,15 @@ public class LoginService {
     @Autowired
     private EmailSender emailSender;
 
+    @Autowired
+    private RedisEmailRepository redisEmailRepository;
+
     private String code;
 
     public void sendEmailTo(String email) {
         this.code = generate6DigitsCode();
         this.emailSender.send(email, code);
+        this.redisEmailRepository.save(email, code);
     }
 
     private String generate6DigitsCode() {

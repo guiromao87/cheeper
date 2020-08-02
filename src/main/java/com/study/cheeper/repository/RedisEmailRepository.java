@@ -16,12 +16,9 @@ public class RedisEmailRepository  {
         this.hashOperations = this.redisTemplate.opsForHash();
     }
 
-    public void save(String email, String code){
-        hashOperations.put("CHEEPER", email, code);
-    }
+    public void save(String email, String code){ hashOperations.put("CHEEPER", email, code); }
 
     public String findBy(String email) {
         return (String) hashOperations.get("CHEEPER", email);
     }
-
 }
