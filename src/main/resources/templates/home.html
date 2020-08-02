@@ -4,39 +4,47 @@
     <title>Home - Cheeper</title>
 </head>
 <body>
-    <p>
-        <span>Olá </span>
-        <a th:href="@{/{profileName}(profileName = ${profile.profileName})}">
-            <span th:text="${profile.name}" />
-        </a>
-        (<span th:text="${profile.formattedProfileName}" />)
+    <header>
+        <p>
+            <span>Olá </span>
+            <a th:href="@{/{profileName}(profileName = ${profile.profileName})}">
+                <span th:text="${profile.name}" />
+            </a>
+            (<span th:text="${profile.formattedProfileName}" />)
+        </p>
+    </header>
 
-    </p>
-
+    <section id="post-cheep">
     <span th:text="${success}" />
-    <form th:action="@{/cheep}" method="post">
-        <div>
-            <textarea name="message" cols="50" rows="3" maxlength="280" placeholder="post um cheep..."></textarea>
-        </div>
-        <div>
-            <input type="submit" value="Cheep">
-        </div>
-    </form>
-
-    <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
-        <li>
+        <form th:action="@{/cheep}" method="post">
             <div>
-                <span th:text="${cheep.formattedCreation}" />: <b><span th:text="${cheep.message}" /></b>
-
-                <form th:action="@{/cheep}" th:method="delete">
-                    <input type="hidden" th:value="${cheep.id}" name="id" />
-                    <input type="submit" value="Excluir" />
-                </form>
+                <textarea name="message" cols="50" rows="3" maxlength="280" placeholder="post um cheep..."></textarea>
             </div>
-        </li>
-    </ul>
+            <div>
+                <input type="submit" value="Cheep">
+            </div>
+        </form>
+    </section>
+
+    <section id="timeline">
+        <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
+            <li>
+                <div>
+                    <span th:text="${cheep.formattedCreation}" />: <b><span th:text="${cheep.message}" /></b>
+
+                    <form th:action="@{/cheep}" th:method="delete">
+                        <input type="hidden" th:value="${cheep.id}" name="id" />
+                        <input type="submit" value="Excluir" />
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </section>
     <br />
     <br />
-    <a th:href="@{/logout}">sair</a>
+
+    <footer>
+        <a th:href="@{/logout}">sair</a>
+    </footer>
 </body>
 </html>

@@ -4,59 +4,63 @@
     <title>Perfil - Cheeper</title>
 </head>
 <body>
-    <div>
-        <a th:href="@{/home}">home</a>
-    </div>
-    <h2>
-        <span th:text="${profile.name}"/>
-        (<span th:text="${profile.formattedProfileName}"/>)
-    </h2>
-    <span th:text="${numberOfCheeps}"/><span th:text="${numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/>
-    <br />
-    <span th:text="${profile.bio}"/>
-    <br />
-    Seguindo <span th:text="${profile.following}"/>
-    <br />
-    <br />
-    <div th:if="${#authentication.name} != ${profile.email}">
-        <div th:if="${isFollowed} == false">
-            <a id="follow" href="#" onclick="follow()">Seguir</a>
+    <header>
+        <div>
+            <a th:href="@{/home}">home</a>
         </div>
-        <div th:if="${isFollowed} == true">
-            <a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>
+        <h2>
+        <span th:text="${profile.name}"/> (<span th:text="${profile.formattedProfileName}"/>)
+        </h2>
+    </header>
+
+    <section>
+        <span th:text="${numberOfCheeps}"/><span th:text="${numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/> <br />
+        <span th:text="${profile.bio}"/> <br />
+        <span>Seguindo</span> <span th:text="${profile.following}"/> <br /><br />
+
+        <div th:if="${#authentication.name} != ${profile.email}">
+            <div th:if="${isFollowed} == false">
+                <a id="follow" href="#" onclick="follow()">Seguir</a>
+            </div>
+            <div th:if="${isFollowed} == true">
+                <a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>
+            </div>
         </div>
-    </div>
+    </section>
 
     <br />
-    <div style="height: 100px; width: 100px;border-radius: 50px;">
-        <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
-    </div>
-    <br />
+
+    <section>
+        <div style="height: 100px; width: 100px;border-radius: 50px;">
+            <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
+        </div>
+        <br /><br /><br />
 
 
-    <br />
-    <br />
-    <div th:if="${#authentication.name} != ${profile.email}">
-        <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
-            <li>
-                <div>
-                    <span th:text="${cheep.formattedCreation}" />:
-                    <b><span th:text="${cheep.message}" /></b>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div th:if="${#authentication.name} == ${profile.email}">
-        <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
-            <input type="file" name="image"/><br />
-            <input type="submit" value="Trocar imagem">
-        </form>
-    </div>
+        <div th:if="${#authentication.name} != ${profile.email}">
+            <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
+                <li>
+                    <div>
+                        <span th:text="${cheep.formattedCreation}" />:
+                        <b><span th:text="${cheep.message}" /></b>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-    <br /><br />
-    <div>
+        <div th:if="${#authentication.name} == ${profile.email}">
+            <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
+                <input type="file" name="image"/><br />
+                <input type="submit" value="Trocar imagem">
+            </form>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <footer>
         <a th:href="@{/logout}">sair</a>
-    </div>
+    </footer>
 
 </body>
 
