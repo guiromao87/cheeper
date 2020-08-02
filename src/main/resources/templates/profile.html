@@ -34,19 +34,7 @@
         <div style="height: 100px; width: 100px;border-radius: 50px;">
             <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
         </div>
-        <br /><br /><br />
-
-
-        <div th:if="${#authentication.name} != ${profile.email}">
-            <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
-                <li>
-                    <div>
-                        <span th:text="${cheep.formattedCreation}" />:
-                        <b><span th:text="${cheep.message}" /></b>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <br />
 
         <div th:if="${#authentication.name} == ${profile.email}">
             <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
@@ -54,6 +42,17 @@
                 <input type="submit" value="Trocar imagem">
             </form>
         </div>
+        <br />
+
+        <h3>Cheeps: </h3>
+        <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
+            <li>
+                <div>
+                    <span th:text="${cheep.formattedCreation}" />:
+                    <b><span th:text="${cheep.message}" /></b>
+                </div>
+            </li>
+        </ul>
     </section>
 
     <br />
