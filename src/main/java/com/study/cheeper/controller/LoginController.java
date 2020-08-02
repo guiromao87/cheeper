@@ -1,6 +1,7 @@
 package com.study.cheeper.controller;
 
 import com.study.cheeper.model.form.NewUserForm;
+import com.study.cheeper.service.LoginService;
 import com.study.cheeper.service.UserService;
 import com.study.cheeper.validator.ConfirmPasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LoginService loginService;
+
     @GetMapping("/login")
     public String loginForm() { return "/login"; }
 
@@ -40,6 +44,8 @@ public class LoginController {
             return form(newUserForm);
 
         this.userService.createNewUser(newUserForm);
+        this.loginService.sendEmailTo(newUserForm.getEmail());
+
         redirectAttributes.addFlashAttribute("success", "Registro efetuado com sucesso");
         return "redirect:login";
     }
