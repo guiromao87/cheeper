@@ -30,12 +30,16 @@
         <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
             <li>
                 <div>
+                    <span th:text="${cheep.profile}" /><br />
                     <span th:text="${cheep.formattedCreation}" />: <b><span th:text="${cheep.message}" /></b>
 
-                    <form th:action="@{/cheep}" th:method="delete">
-                        <input type="hidden" th:value="${cheep.id}" name="id" />
-                        <input type="submit" value="Excluir" />
-                    </form>
+
+                    <div th:if="${#authentication.name} == ${cheep.profileEmail}">
+                        <form th:action="@{/cheep}" th:method="delete">
+                            <input type="hidden" th:value="${cheep.id}" name="id" />
+                            <input type="submit" value="Excluir" />
+                        </form>
+                    </div>
                 </div>
             </li>
         </ul>

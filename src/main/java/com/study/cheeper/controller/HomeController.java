@@ -4,6 +4,7 @@ import com.study.cheeper.model.User;
 import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.repository.CheepRepository;
+import com.study.cheeper.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,14 @@ public class HomeController {
     @Autowired @Lazy
     private User loggedUser;
 
+    @Autowired
+    private HomeService homeService;
+
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("/home");
         mv.addObject("profile", new UserDto(loggedUser));
-        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepRepository.findByProfileId(loggedUser.getId())));
+        mv.addObject("cheeps", CheepDto.toCheepsDto(homeService.createTimeline()));
 
         return mv;
     }
