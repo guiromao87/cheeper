@@ -5,9 +5,11 @@ import com.study.cheeper.model.Cheep;
 import com.study.cheeper.model.User;
 import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
+import com.study.cheeper.model.form.VerifyEmailForm;
 import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
+import com.study.cheeper.service.VerifyEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,6 +42,8 @@ public class ProfileController {
     @Autowired @Lazy
     private User loggedUser;
 
+    @Autowired
+    private VerifyEmailService verifyEmailService;
 
     @GetMapping("/{profileName}")
     public ModelAndView profile(@PathVariable("profileName") String profileName) {
@@ -89,6 +93,30 @@ public class ProfileController {
     public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
         if(image.getSize() > 0)
             profileService.uploadProfileImage(loggedUser.getId(), image);
+
+        return new ModelAndView("redirect:/" + loggedUser.getProfileName());
+    }
+
+    @GetMapping("/form-verify")
+    public ModelAndView formVerify(VerifyEmailForm verifyEmailForm) {
+        ModelAndView mv = new ModelAndView("/confirm-email");
+        mv.addObject("email", loggedUser.getEmail());
+        return mv;
+    }
+
+    @PostMapping("/verify")
+    public ModelAndView verify(VerifyEmailForm verifyEmailForm) {
+        boolean isCodeCorrect = this.verifyEmailService.verify(loggedUser.getEmail(), verifyEmailForm.getCode());
+        if(isCodeCorrect) {
+            User user = this.userRepository.getOne(loggedUser.getId());
+            user.setVerifiedEmail(true);
+            this.userRepository.save(user);
+            this.verifyEmailService.remove(user.getEmail());
+
+
+            final Authentication auth = new UsernamePasswordAuthenticationToken(user, null, null);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
 
         return new ModelAndView("redirect:/" + loggedUser.getProfileName());
     }

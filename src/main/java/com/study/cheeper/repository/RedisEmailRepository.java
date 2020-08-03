@@ -21,4 +21,6 @@ public class RedisEmailRepository  {
     public String findBy(String email) {
         return (String) hashOperations.get("CHEEPER", email);
     }
+
+    public void remove(String email) { hashOperations.delete("CHEEPER",email); }
 }

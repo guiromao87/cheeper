@@ -19,6 +19,7 @@ public class User implements UserDetails {
     private String image;
     private LocalDate created = LocalDate.now();
     private String profileName;
+    private boolean verifiedEmail;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="relationship",
@@ -65,6 +66,10 @@ public class User implements UserDetails {
     public String getProfileName() { return profileName; }
 
     public void setProfileName(String profileName) { this.profileName = profileName; }
+
+    public boolean isVerifiedEmail() { return verifiedEmail; }
+
+    public void setVerifiedEmail(boolean verifiedEmail) { this.verifiedEmail = verifiedEmail; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
