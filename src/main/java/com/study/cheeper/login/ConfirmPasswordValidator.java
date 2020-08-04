@@ -1,4 +1,4 @@
-package com.study.cheeper.validator;
+package com.study.cheeper.login;
 
 import com.study.cheeper.user.NewUserForm;
 import org.springframework.validation.Errors;

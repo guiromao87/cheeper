@@ -1,4 +1,4 @@
-package com.study.cheeper.util;
+package com.study.cheeper.login;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

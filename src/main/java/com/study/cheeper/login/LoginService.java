@@ -1,4 +1,4 @@
-package com.study.cheeper.service;
+package com.study.cheeper.login;
 
 import com.study.cheeper.email.RedisEmailRepository;
 import com.study.cheeper.email.sender.EmailSender;

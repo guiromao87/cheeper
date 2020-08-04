@@ -1,4 +1,4 @@
-package com.study.cheeper.service;
+package com.study.cheeper.login;
 
 import com.study.cheeper.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
