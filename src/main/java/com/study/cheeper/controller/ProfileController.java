@@ -1,12 +1,12 @@
 package com.study.cheeper.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.study.cheeper.model.Cheep;
+import com.study.cheeper.cheep.Cheep;
+import com.study.cheeper.cheep.CheepDto;
+import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.model.User;
-import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.model.form.VerifyEmailForm;
-import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
 import com.study.cheeper.service.VerifyEmailService;

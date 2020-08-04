@@ -1,9 +1,6 @@
-package com.study.cheeper.controller;
+package com.study.cheeper.cheep;
 
-import com.study.cheeper.model.Cheep;
 import com.study.cheeper.model.User;
-import com.study.cheeper.model.form.NewCheepForm;
-import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

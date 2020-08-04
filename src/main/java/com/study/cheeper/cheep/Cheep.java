@@ -1,4 +1,6 @@
-package com.study.cheeper.model;
+package com.study.cheeper.cheep;
+
+import com.study.cheeper.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

@@ -1,6 +1,4 @@
-package com.study.cheeper.model.dto;
-
-import com.study.cheeper.model.Cheep;
+package com.study.cheeper.cheep;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
