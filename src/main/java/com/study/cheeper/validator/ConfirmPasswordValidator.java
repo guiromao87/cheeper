@@ -1,6 +1,6 @@
 package com.study.cheeper.validator;
 
-import com.study.cheeper.model.form.NewUserForm;
+import com.study.cheeper.user.NewUserForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

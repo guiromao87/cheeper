@@ -1,4 +1,4 @@
-package com.study.cheeper.validator;
+package com.study.cheeper.user;
 
 
 import javax.validation.Constraint;

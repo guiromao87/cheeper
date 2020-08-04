@@ -1,8 +1,8 @@
-package com.study.cheeper.service;
+package com.study.cheeper.user;
 
-import com.study.cheeper.model.User;
-import com.study.cheeper.model.form.NewUserForm;
-import com.study.cheeper.repository.UserRepository;
+import com.study.cheeper.user.NewUserForm;
+import com.study.cheeper.user.User;
+import com.study.cheeper.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

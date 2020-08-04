@@ -1,4 +1,4 @@
-package com.study.cheeper.model;
+package com.study.cheeper.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

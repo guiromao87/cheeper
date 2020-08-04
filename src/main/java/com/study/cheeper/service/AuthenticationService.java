@@ -1,6 +1,6 @@
 package com.study.cheeper.service;
 
-import com.study.cheeper.repository.UserRepository;
+import com.study.cheeper.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

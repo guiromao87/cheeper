@@ -1,6 +1,4 @@
-package com.study.cheeper.model.dto;
-
-import com.study.cheeper.model.User;
+package com.study.cheeper.user;
 
 public class UserDto {
 

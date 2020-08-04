@@ -1,10 +1,10 @@
 package com.study.cheeper.controller;
 
-import com.study.cheeper.model.User;
 import com.study.cheeper.cheep.CheepDto;
-import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.service.HomeService;
+import com.study.cheeper.user.User;
+import com.study.cheeper.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;

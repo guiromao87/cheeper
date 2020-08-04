@@ -1,7 +1,5 @@
-package com.study.cheeper.model.form;
+package com.study.cheeper.user;
 
-import com.study.cheeper.model.User;
-import com.study.cheeper.validator.ProfileNameUnique;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;

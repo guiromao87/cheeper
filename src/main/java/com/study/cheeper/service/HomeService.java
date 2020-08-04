@@ -1,8 +1,8 @@
 package com.study.cheeper.service;
 
 import com.study.cheeper.cheep.Cheep;
-import com.study.cheeper.model.User;
 import com.study.cheeper.cheep.CheepRepository;
+import com.study.cheeper.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

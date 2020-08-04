@@ -1,6 +1,6 @@
 package com.study.cheeper.cheep;
 
-import com.study.cheeper.model.User;
+import com.study.cheeper.user.User;
 
 public class NewCheepForm {
 

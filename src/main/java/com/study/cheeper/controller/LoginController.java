@@ -1,8 +1,8 @@
 package com.study.cheeper.controller;
 
-import com.study.cheeper.model.form.NewUserForm;
 import com.study.cheeper.service.LoginService;
-import com.study.cheeper.service.UserService;
+import com.study.cheeper.user.UserService;
+import com.study.cheeper.user.NewUserForm;
 import com.study.cheeper.validator.ConfirmPasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

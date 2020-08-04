@@ -1,6 +1,5 @@
-package com.study.cheeper.validator;
+package com.study.cheeper.user;
 
-import com.study.cheeper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;

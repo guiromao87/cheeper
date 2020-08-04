@@ -1,11 +1,11 @@
-package com.study.cheeper.service;
+package com.study.cheeper.user;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.study.cheeper.model.User;
-import com.study.cheeper.repository.UserRepository;
+import com.study.cheeper.user.User;
+import com.study.cheeper.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
