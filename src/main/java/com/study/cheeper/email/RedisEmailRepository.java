@@ -1,4 +1,4 @@
-package com.study.cheeper.repository;
+package com.study.cheeper.email;
 
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;

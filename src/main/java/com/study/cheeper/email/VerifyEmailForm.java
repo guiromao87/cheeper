@@ -1,4 +1,4 @@
-package com.study.cheeper.model.form;
+package com.study.cheeper.email;
 
 public class VerifyEmailForm {
     private String code;

@@ -1,4 +1,4 @@
-package com.study.cheeper.service.sender;
+package com.study.cheeper.email.sender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

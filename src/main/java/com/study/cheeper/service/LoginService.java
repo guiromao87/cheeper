@@ -1,7 +1,7 @@
 package com.study.cheeper.service;
 
-import com.study.cheeper.repository.RedisEmailRepository;
-import com.study.cheeper.service.sender.EmailSender;
+import com.study.cheeper.email.RedisEmailRepository;
+import com.study.cheeper.email.sender.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
