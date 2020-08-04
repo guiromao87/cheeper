@@ -1,4 +1,4 @@
-package com.study.cheeper.service;
+package com.study.cheeper.timeline;
 
 import com.study.cheeper.cheep.Cheep;
 import com.study.cheeper.cheep.CheepRepository;
@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class HomeService {
+public class TimelineService {
 
     @Autowired @Lazy
     private User loggedUser;

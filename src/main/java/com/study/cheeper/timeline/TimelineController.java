@@ -1,8 +1,7 @@
-package com.study.cheeper.controller;
+package com.study.cheeper.timeline;
 
 import com.study.cheeper.cheep.CheepDto;
 import com.study.cheeper.cheep.CheepRepository;
-import com.study.cheeper.service.HomeService;
 import com.study.cheeper.user.User;
 import com.study.cheeper.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController {
+public class TimelineController {
 
     @Autowired
     private CheepRepository cheepRepository;
@@ -21,7 +20,7 @@ public class HomeController {
     private User loggedUser;
 
     @Autowired
-    private HomeService homeService;
+    private TimelineService homeService;
 
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
