@@ -4,32 +4,52 @@
     <title>Perfil - Cheeper</title>
 </head>
 <body>
-    <div>
-        <a th:href="@{/home}">home</a>
-    </div>
-    <h2>
-        <span th:text="${profile.name}"/>
-        (<span th:text="${profile.formattedProfileName}"/>)
-    </h2>
-    <span th:text="${numberOfCheeps}"/><span th:text="${numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/>
-    <br />
-    <span th:text="${profile.bio}"/>
+    <header>
+        <div>
+            <a th:href="@{/home}">home</a>
+        </div>
+        <br />
+        <div th:unless="${profile.verifiedEmail}">
+            <span>Por favor, <a th:href="@{/form-verify}">verifique</a> seu email</span>
+        </div>
+
+        <h2>
+        <span th:text="${profile.name}"/> (<span th:text="${profile.formattedProfileName}"/>)
+        </h2>
+    </header>
+
+    <section>
+        <span th:text="${numberOfCheeps}"/><span th:text="${numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/> <br />
+        <span th:text="${profile.bio}"/> <br />
+        <span>Seguindo</span> <span th:text="${profile.following}"/> <br /><br />
+
+        <div th:if="${#authentication.name} != ${profile.email}">
+            <div th:if="${isFollowed} == false">
+                <a id="follow" href="#" onclick="follow()">Seguir</a>
+            </div>
+            <div th:if="${isFollowed} == true">
+                <a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>
+            </div>
+        </div>
+    </section>
+
     <br />
 
-    <div th:if="${#authentication.name} != ${profile.email}">
-        <a th:href="@{/follow/{profileName}(profileName = ${profile.profileName})}">Seguir</a>
-    </div>
+    <section>
+        <div style="height: 100px; width: 100px;border-radius: 50px;">
+            <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
+        </div>
+        <br />
 
-    <br />
-    <div style="height: 100px; width: 100px;border-radius: 50px;">
-        <img style="max-height:100%; max-width:100%;border-radius: 50px;" th:src="${profile.image}">
-    </div>
-    <br />
+        <div th:if="${#authentication.name} == ${profile.email}">
+            <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
+                <input type="file" name="image"/><br />
+                <input type="submit" value="Trocar imagem">
+            </form>
+        </div>
+        <br />
 
-
-    <br />
-    <br />
-    <div th:if="${#authentication.name} != ${profile.email}">
+        <h3>Cheeps: </h3>
         <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
             <li>
                 <div>
@@ -38,18 +58,29 @@
                 </div>
             </li>
         </ul>
-    </div>
-    <div th:if="${#authentication.name} == ${profile.email}">
-        <form th:action="@{/upload}" enctype="multipart/form-data" method="post">
-            <input type="file" name="image"/><br />
-            <input type="submit" value="Trocar imagem">
-        </form>
-    </div>
+    </section>
 
-    <br /><br />
-    <div>
+    <br />
+    <br />
+    <footer>
         <a th:href="@{/logout}">sair</a>
-    </div>
+    </footer>
 
 </body>
+
+<script th:inline="javascript">
+    function follow() {
+        fetch('/follow', {
+            method: 'POST',
+            body: [[${profile.name}]]
+        }).then(document.querySelector('#follow').outerHTML = '<a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>')
+    }
+
+    function unfollow() {
+        fetch('/unfollow', {
+            method: 'POST',
+            body: [[${profile.name}]]
+        }).then(document.querySelector('#unfollow').outerHTML = '<a id="follow" href="#" onclick="follow()">Seguir</a>')
+    }
+</script>
 </html>

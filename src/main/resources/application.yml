@@ -30,6 +30,9 @@ spring:
 
 url:
   bucket: https://cheeper.s3.amazonaws.com/
+email:
+  code:
+    sender: ${USER_EMAIL}
 
 aws:
   s3:

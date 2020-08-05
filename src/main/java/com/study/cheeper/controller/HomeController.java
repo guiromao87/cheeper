@@ -4,11 +4,9 @@ import com.study.cheeper.model.User;
 import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
 import com.study.cheeper.repository.CheepRepository;
+import com.study.cheeper.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,16 +20,14 @@ public class HomeController {
     @Autowired @Lazy
     private User loggedUser;
 
+    @Autowired
+    private HomeService homeService;
+
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
-
-
-
-        User user = loggedUser;
-
         ModelAndView mv = new ModelAndView("/home");
-        mv.addObject("profile", new UserDto(user));
-        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepRepository.findByProfileId(user.getId())));
+        mv.addObject("profile", new UserDto(loggedUser));
+        mv.addObject("cheeps", CheepDto.toCheepsDto(homeService.createTimeline()));
 
         return mv;
     }

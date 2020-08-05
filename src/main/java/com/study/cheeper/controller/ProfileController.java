@@ -5,16 +5,18 @@ import com.study.cheeper.model.Cheep;
 import com.study.cheeper.model.User;
 import com.study.cheeper.model.dto.CheepDto;
 import com.study.cheeper.model.dto.UserDto;
+import com.study.cheeper.model.form.VerifyEmailForm;
 import com.study.cheeper.repository.CheepRepository;
 import com.study.cheeper.repository.UserRepository;
 import com.study.cheeper.service.ProfileService;
+import com.study.cheeper.service.VerifyEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,6 +42,8 @@ public class ProfileController {
     @Autowired @Lazy
     private User loggedUser;
 
+    @Autowired
+    private VerifyEmailService verifyEmailService;
 
     @GetMapping("/{profileName}")
     public ModelAndView profile(@PathVariable("profileName") String profileName) {
@@ -48,29 +52,72 @@ public class ProfileController {
         if(!optional.isPresent())
             return new ModelAndView("/404");
 
-        User user = optional.get();
-        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(user.getId());
+        User profile = optional.get();
+
+        boolean isFollowed = false;
+
+        if(profile.isNotTheSameAs(loggedUser) && (loggedUser.isFollowing(profile)))
+            isFollowed = true;
 
         ModelAndView mv = new ModelAndView("/profile");
-        mv.addObject("profile", new UserDto(user));
+
+        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(profile.getId());
+        mv.addObject("profile", new UserDto(profile));
+        mv.addObject("isFollowed", isFollowed);
         mv.addObject("cheeps", CheepDto.toCheepsDto(cheepsByProfile));
         mv.addObject("numberOfCheeps" , cheepsByProfile.size());
         return mv;
     }
 
-    @GetMapping("/follow/{profileName}")
-    public ModelAndView follow(@PathVariable String profileName) {
-        return new ModelAndView("/follow.html");
+    @ResponseBody
+    @PostMapping(value = {"/follow", "/unfollow"})
+    public void followOrUnfollow(@RequestBody String profileName) {
+        User follower = userRepository.getOne(loggedUser.getId());
+        Optional<User> optionalToBeFollowed = userRepository.findByProfileName(profileName);
+
+        if(optionalToBeFollowed.isPresent()) {
+
+            if(follower.getFollowing().contains(optionalToBeFollowed.get()))
+                follower.unfollow(optionalToBeFollowed.get());
+            else
+                follower.follow(optionalToBeFollowed.get());
+
+            User followerSaved = userRepository.save(follower);
+
+            final Authentication auth = new UsernamePasswordAuthenticationToken(followerSaved, null, null);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
     }
 
     @PostMapping("/upload")
     public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
-        User user = loggedUser;
-
         if(image.getSize() > 0)
-            profileService.uploadProfileImage(user.getId(), image);
+            profileService.uploadProfileImage(loggedUser.getId(), image);
 
-        return profile(user.getProfileName());
+        return new ModelAndView("redirect:/" + loggedUser.getProfileName());
     }
 
+    @GetMapping("/form-verify")
+    public ModelAndView formVerify(VerifyEmailForm verifyEmailForm) {
+        ModelAndView mv = new ModelAndView("/confirm-email");
+        mv.addObject("email", loggedUser.getEmail());
+        return mv;
+    }
+
+    @PostMapping("/verify")
+    public ModelAndView verify(VerifyEmailForm verifyEmailForm) {
+        boolean isCodeCorrect = this.verifyEmailService.verify(loggedUser.getEmail(), verifyEmailForm.getCode());
+        if(isCodeCorrect) {
+            User user = this.userRepository.getOne(loggedUser.getId());
+            user.setVerifiedEmail(true);
+            this.userRepository.save(user);
+            this.verifyEmailService.remove(user.getEmail());
+
+
+            final Authentication auth = new UsernamePasswordAuthenticationToken(user, null, null);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
+        return new ModelAndView("redirect:/" + loggedUser.getProfileName());
+    }
 }

@@ -13,7 +13,7 @@ public class LoggedUserProducer {
 
 
     @Bean
-    @Scope("session")
+    @Scope("prototype")
     public User getLoggedUser() {
         if(SecurityContextHolder.getContext().getAuthentication() != null
             && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {

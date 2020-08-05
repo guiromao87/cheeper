@@ -7,14 +7,12 @@
 <body>
 <h2>Enviamos um código para você</h2>
 
-<h3>Insira-o abaixo para verificar <span th:text="${newUserForm.email}" /></h3>
+<h3>Insira-o abaixo para verificar o email</h3>
 
-<form th:action="@{/teste}" th:object="${newUserForm}" method="post">
-    Código de verificação: <input type="text" size="7" th:field="*{code}"/>
+<form th:action="@{/verify}" th:object="${verifyEmailForm}" method="post">
+    Código de verificação: <input type="text" size="7" th:field="*{code}" />
 
-    <br />
-    <br />
-    <input type="submit" value="Avançar"/>
+    <input type="submit" value="Verificar"/>
 </form>
 </body>
 </html>

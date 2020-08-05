@@ -5,10 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class User implements UserDetails {
@@ -22,20 +19,25 @@ public class User implements UserDetails {
     private String image;
     private LocalDate created = LocalDate.now();
     private String profileName;
+    private boolean verifiedEmail;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="relationship",
             joinColumns=@JoinColumn(name="follower_id"),
             inverseJoinColumns=@JoinColumn(name="followed_id"))
-    private List<User> Following = new ArrayList<>();
+    private Set<User> following = new HashSet<>();
 
-    public List<User> getFollowing() {
-        return Following;
+    public Set<User> getFollowing() { return Collections.unmodifiableSet(following); }
+
+    public boolean isFollowing(User profile) {
+        return this.following.contains(profile);
     }
 
-    public void setFollowing(List<User> following) {
-        Following = following;
+    public void follow(User toBeFollowed) {
+        this.following.add(toBeFollowed);
     }
+
+    public void unfollow(User followed) { this.following.remove(followed); }
 
     public Integer getId() { return id; }
 
@@ -64,6 +66,10 @@ public class User implements UserDetails {
     public String getProfileName() { return profileName; }
 
     public void setProfileName(String profileName) { this.profileName = profileName; }
+
+    public boolean isVerifiedEmail() { return verifiedEmail; }
+
+    public void setVerifiedEmail(boolean verifiedEmail) { this.verifiedEmail = verifiedEmail; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -98,5 +104,22 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isNotTheSameAs(User loggedUser) {
+        return !this.getId().equals(loggedUser.getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return profileName.equals(user.profileName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(profileName);
     }
 }
