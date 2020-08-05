@@ -29,11 +29,11 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String loginForm() { return "/login"; }
+    public String loginForm() { return "login"; }
 
     @GetMapping("/registry")
     public String form(NewUserForm user) {
-        return "/registry";
+        return "registry";
     }
 
     @PostMapping("/registry")
