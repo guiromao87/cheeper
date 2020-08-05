@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Entity
-public class User implements UserDetails {
+public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -70,41 +70,6 @@ public class User implements UserDetails {
     public boolean isVerifiedEmail() { return verifiedEmail; }
 
     public void setVerifiedEmail(boolean verifiedEmail) { this.verifiedEmail = verifiedEmail; }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-     return Collections.emptyList();
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
     public boolean isNotTheSameAs(User loggedUser) {
         return !this.getId().equals(loggedUser.getId());
