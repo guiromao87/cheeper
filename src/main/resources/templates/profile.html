@@ -9,10 +9,11 @@
             <a th:href="@{/home}">home</a>
         </div>
         <br />
-        <div th:unless="${profile.verifiedEmail}">
-            <span>Por favor, <a th:href="@{/form-verify}">verifique</a> seu email</span>
+        <div th:if="${#authentication.name} == ${profile.email}">
+            <div th:unless="${profile.verifiedEmail}">
+                <span>Por favor, <a th:href="@{/form-verify}">verifique</a> seu email</span>
+            </div>
         </div>
-
         <h2>
         <span th:text="${profile.name}"/> (<span th:text="${profile.formattedProfileName}"/>)
         </h2>
