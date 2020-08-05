@@ -1,0 +1,31 @@
+package com.study.cheeper.timeline;
+
+import com.study.cheeper.cheep.Cheep;
+import com.study.cheeper.cheep.CheepRepository;
+import com.study.cheeper.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+@Service
+public class TimelineService {
+
+    @Autowired @Lazy
+    private User loggedUser;
+
+    @Autowired
+    private CheepRepository cheepRepository;
+
+    public List<Cheep> createTimeline() {
+        List<Cheep> timelineCheeps = new ArrayList<>();
+        timelineCheeps.addAll(cheepRepository.findByProfileId(loggedUser.getId()));
+        loggedUser.getFollowing().forEach(f -> timelineCheeps.addAll(cheepRepository.findByProfileId(f.getId())));
+        timelineCheeps.sort(Comparator.comparing(Cheep::getCreation));
+
+        return timelineCheeps;
+    }
+}

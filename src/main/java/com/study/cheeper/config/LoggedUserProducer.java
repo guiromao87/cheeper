@@ -1,6 +1,6 @@
 package com.study.cheeper.config;
 
-import com.study.cheeper.model.User;
+import com.study.cheeper.user.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;

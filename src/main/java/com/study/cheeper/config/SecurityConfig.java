@@ -1,6 +1,6 @@
 package com.study.cheeper.config;
 
-import com.study.cheeper.service.AuthenticationService;
+import com.study.cheeper.login.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
