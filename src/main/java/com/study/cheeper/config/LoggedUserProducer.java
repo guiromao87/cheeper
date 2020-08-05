@@ -1,26 +1,23 @@
 package com.study.cheeper.config;
 
-import com.study.cheeper.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-@Component
-@Lazy
-public class LoggedUserProducer {
+import com.study.cheeper.login.LoggedUser;
+import com.study.cheeper.user.User;
 
+@Component
+public class LoggedUserProducer {
+    
+	@Autowired
+	private LoggedUser user;
 
     @Bean
     @Scope("prototype")
     public User getLoggedUser() {
-        if(SecurityContextHolder.getContext().getAuthentication() != null
-            && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-
-            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
-
-        return new User();
+    	return user.asUser();
     }
+    
 }

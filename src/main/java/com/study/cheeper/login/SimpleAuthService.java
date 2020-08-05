@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SimpleAuthService implements UserDetailsService{
 	
 	@Autowired
@@ -19,6 +21,7 @@ public class SimpleAuthService implements UserDetailsService{
 								+ "(u.id, u.profileName, u.email, u.password) "
 								+ "from User u "
 								+ "where u.email = :email", UserSummary.class)
+				.setParameter("email", username)
 				.getSingleResult();
 	}
 

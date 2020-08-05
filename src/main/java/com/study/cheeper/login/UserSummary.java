@@ -6,15 +6,16 @@ import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@SuppressWarnings("serial")
 public class UserSummary implements UserDetails {
 	
-	private Long id;
+	private Integer id;
 	private String profileName;
 	private String username;
 	private String password;
 	
 	
-	public UserSummary(Long id, String profileName, String username, String password) {
+	public UserSummary(Integer id, String profileName, String username, String password) {
 		super();
 		this.id = id;
 		this.profileName = profileName;
@@ -22,7 +23,7 @@ public class UserSummary implements UserDetails {
 		this.password = password;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
