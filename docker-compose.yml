@@ -27,6 +27,8 @@ services:
       REGION: ${REGION}
       USER_EMAIL: ${USER_EMAIL}
       USER_PASSWORD: ${USER_PASSWORD}
+      DATABASE_HOST: ${DATABASE_HOST}
+      REDIS_HOST: ${REDIS_HOST}
     restart: always
     depends_on:
       - db
