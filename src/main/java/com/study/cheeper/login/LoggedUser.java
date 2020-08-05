@@ -40,6 +40,16 @@ public class LoggedUser {
 		return getCurrentUser().map(u -> u.getProfileName()).orElseThrow(NOT_LOGGED);
 	}
 
+	public Integer getId() {
+		return getCurrentUser().map(u -> u.getId()).orElseThrow(NOT_LOGGED);
+	}
+
+	public String getEmail() {
+		return getCurrentUser().map(u -> u.getEmail()).orElseThrow(NOT_LOGGED);
+	}
+
+
+
 	public User asUser() {
 		return getCurrentUser().flatMap(u -> users.findById(u.getId())).orElseThrow(NOT_LOGGED);
 	}
