@@ -1,11 +1,13 @@
 package com.study.cheeper.user;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.study.cheeper.login.UserSummary;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -87,4 +89,6 @@ public class User {
     public int hashCode() {
         return Objects.hash(profileName);
     }
+
+    public UserSummary toUserSummary() { return new UserSummary(this.id, this.profileName, this.email, this.password); }
 }

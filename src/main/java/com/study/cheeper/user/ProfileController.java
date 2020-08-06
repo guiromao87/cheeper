@@ -1,30 +1,24 @@
 package com.study.cheeper.user;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.amazonaws.services.s3.AmazonS3;
 import com.study.cheeper.cheep.Cheep;
 import com.study.cheeper.cheep.CheepDto;
 import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.email.VerifyEmailForm;
 import com.study.cheeper.email.VerifyEmailService;
 import com.study.cheeper.login.LoggedUser;
+import com.study.cheeper.login.UserSummary;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProfileController {
@@ -83,7 +77,8 @@ public class ProfileController {
 
             User followerSaved = userRepository.save(follower);
 
-            final Authentication auth = new UsernamePasswordAuthenticationToken(followerSaved, null, null);
+            UserSummary userSummary = followerSaved.toUserSummary();
+            final Authentication auth = new UsernamePasswordAuthenticationToken(userSummary, null, null);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
     }
@@ -112,8 +107,8 @@ public class ProfileController {
             this.userRepository.save(user);
             this.verifyEmailService.remove(user.getEmail());
 
-
-            final Authentication auth = new UsernamePasswordAuthenticationToken(user, null, null);
+            UserSummary userSummary = user.toUserSummary();
+            final Authentication auth = new UsernamePasswordAuthenticationToken(userSummary, null, null);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 

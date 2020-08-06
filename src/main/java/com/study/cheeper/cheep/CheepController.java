@@ -4,7 +4,6 @@ import com.study.cheeper.login.LoggedUser;
 import com.study.cheeper.user.User;
 import com.study.cheeper.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;

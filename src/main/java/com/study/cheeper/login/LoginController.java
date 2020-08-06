@@ -1,7 +1,7 @@
 package com.study.cheeper.login;
 
-import com.study.cheeper.user.UserService;
 import com.study.cheeper.user.NewUserForm;
+import com.study.cheeper.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
