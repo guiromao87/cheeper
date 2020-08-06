@@ -22,8 +22,8 @@ public class TimelineController {
 
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
-        ModelAndView mv = new ModelAndView("/home");
-        mv.addObject("profile", new UserDto(loggedUser.asUser()));
+        ModelAndView mv = new ModelAndView("home");
+        mv.addObject("profile", new UserDto(loggedUser));
         mv.addObject("cheeps", CheepDto.toCheepsDto(homeService.createTimeline()));
 
         return mv;

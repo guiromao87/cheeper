@@ -1,0 +1,37 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    container_name: db
+    environment:
+        - MYSQL_ROOT_PASSWORD=cheeper
+    ports:
+        - 3306:3306
+    restart: always
+    volumes:
+      - cheeper:/var/lib/mysql
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server
+    ports:
+        - 6379:6379
+  cheeper:
+    image: guiromao/cheeper:0.0.1-SNAPSHOT
+    container_name: cheeper
+    ports:
+      - 8088:8088
+    environment:
+      ACCESS_KEY: ${ACCESS_KEY}
+      SECRET_KEY: ${SECRET_KEY}
+      REGION: ${REGION}
+      USER_EMAIL: ${USER_EMAIL}
+      USER_PASSWORD: ${USER_PASSWORD}
+      DATABASE_HOST: ${DATABASE_HOST}
+      REDIS_HOST: ${REDIS_HOST}
+    restart: always
+    depends_on:
+      - db
+      - redis
+volumes:
+  cheeper:

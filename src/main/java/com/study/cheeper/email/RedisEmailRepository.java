@@ -1,26 +1,24 @@
 package com.study.cheeper.email;
 
-import org.springframework.data.redis.core.HashOperations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RedisEmailRepository  {
 
-    private HashOperations hashOperations;
-
+    @Autowired
     private RedisTemplate redisTemplate;
 
     public RedisEmailRepository(RedisTemplate redisTemplate){
         this.redisTemplate = redisTemplate;
-        this.hashOperations = this.redisTemplate.opsForHash();
     }
 
-    public void save(String email, String code){ hashOperations.put("CHEEPER", email, code); }
+    public void save(String email, String code){ redisTemplate.opsForValue().set(email,code); }
 
     public String findBy(String email) {
-        return (String) hashOperations.get("CHEEPER", email);
+        return (String) redisTemplate.opsForValue().get(email);
     }
 
-    public void remove(String email) { hashOperations.delete("CHEEPER",email); }
+    public void remove(String email) { redisTemplate.opsForValue().getOperations().delete(email); }
 }

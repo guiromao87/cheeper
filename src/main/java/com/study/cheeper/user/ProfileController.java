@@ -49,7 +49,7 @@ public class ProfileController {
         Optional<User> optional = this.userRepository.findByProfileName(profileName);
 
         if(!optional.isPresent())
-            return new ModelAndView("/404");
+            return new ModelAndView("404");
 
         User profile = optional.get();
         User current = loggedUser.asUser();
@@ -58,7 +58,7 @@ public class ProfileController {
         if(profile.isNotTheSameAs(current) && (current.isFollowing(profile)))
             isFollowed = true;
 
-        ModelAndView mv = new ModelAndView("/profile");
+        ModelAndView mv = new ModelAndView("profile");
 
         List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(profile.getId());
         mv.addObject("profile", new UserDto(profile));
@@ -98,7 +98,7 @@ public class ProfileController {
 
     @GetMapping("/form-verify")
     public ModelAndView formVerify(VerifyEmailForm verifyEmailForm) {
-        ModelAndView mv = new ModelAndView("/confirm-email");
+        ModelAndView mv = new ModelAndView("confirm-email");
         mv.addObject("email", loggedUser.getEmail());
         return mv;
     }

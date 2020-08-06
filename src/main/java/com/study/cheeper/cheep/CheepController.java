@@ -41,7 +41,7 @@ public class CheepController {
         if(toDelete.isOwnedBy(loggedUser.asUser()))
             cheepRepository.delete(toDelete);
 
-        return "redirect:/home";
+        return "redirect:home";
     }
 
 }
