@@ -6,16 +6,11 @@ import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.email.VerifyEmailForm;
 import com.study.cheeper.email.VerifyEmailService;
 import com.study.cheeper.login.LoggedUser;
-import com.study.cheeper.login.UserSummary;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -74,12 +69,7 @@ public class ProfileController {
                 follower.unfollow(optionalToBeFollowed.get());
             else
                 follower.follow(optionalToBeFollowed.get());
-
-            User followerSaved = userRepository.save(follower);
-
-            UserSummary userSummary = followerSaved.toUserSummary();
-            final Authentication auth = new UsernamePasswordAuthenticationToken(userSummary, null, null);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            userRepository.save(follower);
         }
     }
 
@@ -106,10 +96,6 @@ public class ProfileController {
             user.setVerifiedEmail(true);
             this.userRepository.save(user);
             this.verifyEmailService.remove(user.getEmail());
-
-            UserSummary userSummary = user.toUserSummary();
-            final Authentication auth = new UsernamePasswordAuthenticationToken(userSummary, null, null);
-            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         return new ModelAndView("redirect:/" + loggedUser.getProfileName());
