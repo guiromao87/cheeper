@@ -1,5 +1,6 @@
 package com.study.cheeper.cheep;
 
+import com.study.cheeper.login.LoggedUser;
 import com.study.cheeper.user.User;
 import com.study.cheeper.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class CheepController {
     @Autowired
     private CheepRepository cheepRepository;
 
-    @Autowired @Lazy
-    private User loggedUser;
+    @Autowired
+    private LoggedUser loggedUser;
 
     @PostMapping
     public String createNewCheep(NewCheepForm newCheepForm, RedirectAttributes attr) {
-        User author = userRepository.getOne(loggedUser.getId());
+        User author = loggedUser.asUser();
         Cheep cheep = newCheepForm.toCheep(author);
         cheepRepository.save(cheep);
 
@@ -37,7 +38,7 @@ public class CheepController {
     public String delete(Long id) {
         Cheep toDelete = this.cheepRepository.getOne(id);
 
-        if(toDelete.isOwnedBy(loggedUser))
+        if(toDelete.isOwnedBy(loggedUser.asUser()))
             cheepRepository.delete(toDelete);
 
         return "redirect:home";

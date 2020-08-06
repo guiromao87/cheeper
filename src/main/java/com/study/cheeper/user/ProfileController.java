@@ -1,24 +1,30 @@
 package com.study.cheeper.user;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.study.cheeper.cheep.Cheep;
 import com.study.cheeper.cheep.CheepDto;
 import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.email.VerifyEmailForm;
 import com.study.cheeper.email.VerifyEmailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import com.study.cheeper.login.LoggedUser;
 
 @Controller
 public class ProfileController {
@@ -33,10 +39,7 @@ public class ProfileController {
     private CheepRepository cheepRepository;
 
     @Autowired
-    private AmazonS3 amazonS3;
-
-    @Autowired @Lazy
-    private User loggedUser;
+    private LoggedUser loggedUser;
 
     @Autowired
     private VerifyEmailService verifyEmailService;
@@ -49,10 +52,10 @@ public class ProfileController {
             return new ModelAndView("404");
 
         User profile = optional.get();
-
+        User current = loggedUser.asUser();
         boolean isFollowed = false;
 
-        if(profile.isNotTheSameAs(loggedUser) && (loggedUser.isFollowing(profile)))
+        if(profile.isNotTheSameAs(current) && (current.isFollowing(profile)))
             isFollowed = true;
 
         ModelAndView mv = new ModelAndView("profile");
@@ -68,7 +71,7 @@ public class ProfileController {
     @ResponseBody
     @PostMapping(value = {"/follow", "/unfollow"})
     public void followOrUnfollow(@RequestBody String profileName) {
-        User follower = userRepository.getOne(loggedUser.getId());
+        User follower = loggedUser.asUser();
         Optional<User> optionalToBeFollowed = userRepository.findByProfileName(profileName);
 
         if(optionalToBeFollowed.isPresent()) {
@@ -104,7 +107,7 @@ public class ProfileController {
     public ModelAndView verify(VerifyEmailForm verifyEmailForm) {
         boolean isCodeCorrect = this.verifyEmailService.verify(loggedUser.getEmail(), verifyEmailForm.getCode());
         if(isCodeCorrect) {
-            User user = this.userRepository.getOne(loggedUser.getId());
+            User user = loggedUser.asUser();
             user.setVerifiedEmail(true);
             this.userRepository.save(user);
             this.verifyEmailService.remove(user.getEmail());

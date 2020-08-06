@@ -1,6 +1,5 @@
 package com.study.cheeper.config;
 
-import com.study.cheeper.login.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.study.cheeper.login.SimpleAuthService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AuthenticationService authService;
+    private SimpleAuthService authService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

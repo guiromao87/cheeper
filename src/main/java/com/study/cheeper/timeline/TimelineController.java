@@ -2,6 +2,7 @@ package com.study.cheeper.timeline;
 
 import com.study.cheeper.cheep.CheepDto;
 import com.study.cheeper.cheep.CheepRepository;
+import com.study.cheeper.login.LoggedUser;
 import com.study.cheeper.user.User;
 import com.study.cheeper.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TimelineController {
 
     @Autowired
-    private CheepRepository cheepRepository;
-
-    @Autowired @Lazy
-    private User loggedUser;
+    private LoggedUser loggedUser;
 
     @Autowired
     private TimelineService homeService;
