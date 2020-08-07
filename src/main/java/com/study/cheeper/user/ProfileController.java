@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -58,20 +59,40 @@ public class ProfileController {
     }
 
     @ResponseBody
-    @PostMapping(value = {"/follow", "/unfollow"})
-    public void followOrUnfollow(@RequestBody String profileName) {
+    @PostMapping("/follow")
+    public void follow(@RequestBody String profileName) {
         User follower = loggedUser.asUser();
         Optional<User> optionalToBeFollowed = userRepository.findByProfileName(profileName);
 
         if(optionalToBeFollowed.isPresent()) {
-
-            if(follower.getFollowing().contains(optionalToBeFollowed.get()))
-                follower.unfollow(optionalToBeFollowed.get());
-            else
-                follower.follow(optionalToBeFollowed.get());
+            follower.follow(optionalToBeFollowed.get());
             userRepository.save(follower);
         }
     }
+
+    @ResponseBody
+    @PostMapping("/unfollow")
+    public void unfollow(@RequestBody String profileName) {
+        User follower = loggedUser.asUser();
+        Optional<User> optionalToBeUnFollowed = userRepository.findByProfileName(profileName);
+
+        if(optionalToBeUnFollowed.isPresent()) {
+            follower.unfollow(optionalToBeUnFollowed.get());
+            userRepository.save(follower);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @PostMapping("/upload")
     public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
