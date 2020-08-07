@@ -7,10 +7,10 @@
     <header>
         <p>
             <span>Olá </span>
-            <a th:href="@{/{profileName}(profileName = ${profile.profileName})}">
-                <span th:text="${profile.name}" />
+            <a th:href="@{/{profileName}(profileName = ${timeline.profile.profileName})}">
+                <span th:text="${timeline.profile.name}" />
             </a>
-            (<span th:text="${profile.formattedProfileName}" />)
+            (<span th:text="${timeline.profile.formattedProfileName}" />)
         </p>
     </header>
 
@@ -27,7 +27,7 @@
     </section>
 
     <section id="timeline">
-        <ul style="list-style-type: none;" th:each="cheep : ${cheeps}">
+        <ul style="list-style-type: none;" th:each="cheep : ${timeline.cheeps}">
             <li>
                 <div>
                     <span th:text="${cheep.profile}" /><br />
