@@ -62,37 +62,15 @@ public class ProfileController {
     @PostMapping("/follow")
     public void follow(@RequestBody String profileName) {
         User follower = loggedUser.asUser();
-        Optional<User> optionalToBeFollowed = userRepository.findByProfileName(profileName);
-
-        if(optionalToBeFollowed.isPresent()) {
-            follower.follow(optionalToBeFollowed.get());
-            userRepository.save(follower);
-        }
+        profileService.follow(follower, profileName);
     }
 
     @ResponseBody
     @PostMapping("/unfollow")
     public void unfollow(@RequestBody String profileName) {
         User follower = loggedUser.asUser();
-        Optional<User> optionalToBeUnFollowed = userRepository.findByProfileName(profileName);
-
-        if(optionalToBeUnFollowed.isPresent()) {
-            follower.unfollow(optionalToBeUnFollowed.get());
-            userRepository.save(follower);
-        }
+        profileService.unfollow(follower, profileName);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     @PostMapping("/upload")
     public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
