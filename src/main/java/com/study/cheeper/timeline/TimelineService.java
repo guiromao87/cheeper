@@ -1,16 +1,15 @@
 package com.study.cheeper.timeline;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.study.cheeper.cheep.Cheep;
 import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.login.LoggedUser;
 import com.study.cheeper.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class TimelineService {
@@ -21,13 +20,18 @@ public class TimelineService {
     @Autowired
     private CheepRepository cheepRepository;
 
-    public List<Cheep> createTimeline() {
-        List<Cheep> timelineCheeps = new ArrayList<>();
+    public TimelineDto createTimeline() {
         User current = loggedUser.asUser();
-        timelineCheeps.addAll(cheepRepository.findByProfileId(current.getId()));
-        current.getFollowing().forEach(f -> timelineCheeps.addAll(cheepRepository.findByProfileId(f.getId())));
-        timelineCheeps.sort(Comparator.comparing(Cheep::getCreation));
+        return new TimelineDto(current, getAllCheeps(current));
+    }
 
-        return timelineCheeps;
+    private List<Cheep> getAllCheeps(User current) {
+        List<Cheep> cheeps = new ArrayList<>();
+
+        cheeps.addAll(cheepRepository.findByProfileId(current.getId()));
+        current.getFollowing().forEach(f -> cheeps.addAll(cheepRepository.findByProfileId(f.getId())));
+        cheeps.sort(Comparator.comparing(Cheep::getCreation).reversed());
+
+        return cheeps;
     }
 }
