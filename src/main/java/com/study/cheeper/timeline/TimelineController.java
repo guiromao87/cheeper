@@ -19,7 +19,7 @@ public class TimelineController {
 
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
-        ModelAndView mv = new ModelAndView("home");
+        ModelAndView mv = new ModelAndView("timeline");
         mv.addObject("profile", new UserDto(loggedUser.asUser()));
         mv.addObject("cheeps", CheepDto.toCheepsDto(homeService.createTimeline()));
 
