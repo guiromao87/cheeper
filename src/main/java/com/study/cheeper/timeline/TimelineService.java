@@ -30,7 +30,7 @@ public class TimelineService {
 
         cheeps.addAll(cheepRepository.findByProfileId(current.getId()));
         current.getFollowing().forEach(f -> cheeps.addAll(cheepRepository.findByProfileId(f.getId())));
-        cheeps.sort(Comparator.comparing(Cheep::getCreation));
+        cheeps.sort(Comparator.comparing(Cheep::getCreation).reversed());
 
         return cheeps;
     }
