@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -55,9 +54,9 @@ public class ProfileController {
     }
 
     @PostMapping("/upload")
-    public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
+    public ModelAndView upload(@RequestParam("image") MultipartFile image) {
         if(image.getSize() > 0)
-            profileService.uploadProfileImage(loggedUser.getId(), image);
+            profileService.uploadProfileImage(image);
 
         return new ModelAndView("redirect:/" + loggedUser.getProfileName());
     }

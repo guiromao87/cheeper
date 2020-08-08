@@ -34,22 +34,16 @@ public class ProfileService {
     @Autowired
     private LoggedUser loggedUser;
 
-    public void uploadProfileImage(Integer id, MultipartFile image) throws IOException {
-        String imageName = id + "/" + image.getOriginalFilename();
+    public void uploadProfileImage(MultipartFile image) {
+        User user = loggedUser.asUser();
 
-
-        PutObjectRequest putObjectRequest =
-                new PutObjectRequest("cheeper",
-                        imageName,
-                        image.getInputStream(),
-                        new ObjectMetadata());
-
-        putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
-        amazonS3.putObject(putObjectRequest);
-
-        User user = userRepository.getOne(id);
-        user.setImage(bucketUrl + imageName);
-        userRepository.save(user);
+        try {
+            String imageName = uploadAmazonS3(user.getId(), image);
+            user.setImage(bucketUrl + imageName);
+            userRepository.save(user);
+        } catch (IOException ex) {
+            throw new RuntimeException("Erro no carregamento da imagem");
+        }
     }
 
     public void follow(User follower, String profileName) {
@@ -80,5 +74,20 @@ public class ProfileService {
             profileDto.beingFollowed();
 
         return profileDto;
+    }
+
+    private String uploadAmazonS3(Integer id, MultipartFile image) throws IOException {
+        String imageName = id + "/" + image.getOriginalFilename();
+
+        PutObjectRequest putObjectRequest =
+                new PutObjectRequest("cheeper",
+                        imageName,
+                        image.getInputStream(),
+                        new ObjectMetadata());
+
+        putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
+        amazonS3.putObject(putObjectRequest);
+
+        return imageName;
     }
 }
