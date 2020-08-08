@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TimelineController {
+class TimelineController {
 
     @Autowired
     private TimelineService timelineService;

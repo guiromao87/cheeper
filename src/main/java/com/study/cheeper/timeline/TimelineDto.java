@@ -8,7 +8,7 @@ import com.study.cheeper.user.UserDto;
 import java.util.Collections;
 import java.util.List;
 
-public class TimelineDto {
+class TimelineDto {
 
     private UserDto profile;
     private List<CheepDto> cheeps;
