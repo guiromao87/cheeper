@@ -73,14 +73,14 @@
     function follow() {
         fetch('/follow', {
             method: 'POST',
-            body: [[${profile.user.name}]]
+            body: [[${profile.user.profileName}]]
         }).then(document.querySelector('#follow').outerHTML = '<a id="unfollow" href="#" onclick="unfollow()">Deixar de seguir</a>')
     }
 
     function unfollow() {
         fetch('/unfollow', {
             method: 'POST',
-            body: [[${profile.user.name}]]
+            body: [[${profile.user.profileName}]]
         }).then(document.querySelector('#unfollow').outerHTML = '<a id="follow" href="#" onclick="follow()">Seguir</a>')
     }
 </script>
