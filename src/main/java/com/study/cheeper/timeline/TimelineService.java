@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class TimelineService {
+class TimelineService {
 
     @Autowired
     private LoggedUser loggedUser;

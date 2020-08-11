@@ -1,8 +1,5 @@
 package com.study.cheeper.user;
 
-import com.study.cheeper.cheep.Cheep;
-import com.study.cheeper.cheep.CheepDto;
-import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.email.VerifyEmailForm;
 import com.study.cheeper.email.VerifyEmailService;
 import com.study.cheeper.login.LoggedUser;
@@ -12,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,9 +19,6 @@ public class ProfileController {
 
     @Autowired
     private ProfileService profileService;
-
-    @Autowired
-    private CheepRepository cheepRepository;
 
     @Autowired
     private LoggedUser loggedUser;
@@ -41,20 +33,9 @@ public class ProfileController {
         if(!optional.isPresent())
             return new ModelAndView("404");
 
-        User profile = optional.get();
-        User current = loggedUser.asUser();
-        boolean isFollowed = false;
-
-        if(profile.isNotTheSameAs(current) && (current.isFollowing(profile)))
-            isFollowed = true;
-
         ModelAndView mv = new ModelAndView("profile");
+        mv.addObject("profile", profileService.profile(optional.get()));
 
-        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(profile.getId());
-        mv.addObject("profile", new UserDto(profile));
-        mv.addObject("isFollowed", isFollowed);
-        mv.addObject("cheeps", CheepDto.toCheepsDto(cheepsByProfile));
-        mv.addObject("numberOfCheeps" , cheepsByProfile.size());
         return mv;
     }
 
@@ -73,9 +54,9 @@ public class ProfileController {
     }
 
     @PostMapping("/upload")
-    public ModelAndView upload(@RequestParam("image") MultipartFile image) throws IOException {
+    public ModelAndView upload(@RequestParam("image") MultipartFile image) {
         if(image.getSize() > 0)
-            profileService.uploadProfileImage(loggedUser.getId(), image);
+            profileService.uploadProfileImage(image);
 
         return new ModelAndView("redirect:/" + loggedUser.getProfileName());
     }
