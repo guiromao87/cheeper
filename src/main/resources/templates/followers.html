@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seguidores - Cheeper</title>
+</head>
+<header>
+    <div>
+        <a th:href="@{/home}">home</a>
+    </div>
+</header>
+</head>
+<body>
+    <h2>Seguidores</h2>
+
+    <div th:each="followers : ${followersDto}">
+        <b><span th:text="${followers.name}"/></b><br />
+        <span th:text="${followers.profileName}"/><br />
+        <span th:text="${followers.bio}"/>
+        <hr />
+    </div>
+</body>
+</html>

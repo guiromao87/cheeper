@@ -49,6 +49,15 @@ public class ProfileController {
         return mv;
     }
 
+    @GetMapping("/{profileName}/followers")
+    public ModelAndView followers(@PathVariable String profileName) {
+        Set<User> followers = profileService.followers(profileName);
+        ModelAndView mv = new ModelAndView("followers");
+        mv.addObject("followersDto", FollowersDto.toFollowersDto(followers));
+
+        return mv;
+    }
+
     @ResponseBody
     @PostMapping("/follow")
     public void follow(@RequestBody String profileName) {

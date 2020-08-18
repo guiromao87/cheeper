@@ -55,6 +55,14 @@ public class ProfileService {
         return userOptional.get().getFollowing();
     }
 
+    public Set<User> followers(String profileName) {
+        Optional<User> userOptional = userRepository.findByProfileName(profileName);
+
+        if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
+
+        return userOptional.get().getBeingFollowed();
+    }
+
     public void follow(User follower, String profileName) {
         Optional<User> beFollowed = userRepository.findByProfileName(profileName);
 
@@ -62,7 +70,6 @@ public class ProfileService {
 
         follower.follow(beFollowed.get());
         userRepository.save(follower);
-
     }
 
     public void unfollow(User follower, String profileName) {

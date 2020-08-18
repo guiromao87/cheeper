@@ -24,12 +24,12 @@
         <span th:text="${profile.user.bio}"/> <br />
 
         <a th:href="@{/{profileName}/following(profileName = ${profile.user.profileName})}">
-        <span>Seguindo</span> <span th:text="${profile.user.following}"/></a>&nbsp&nbsp
+            <span>Seguindo</span> <span th:text="${profile.user.following}"/>
+        </a>&nbsp&nbsp
 
-
-
-
-        <span th:text="${profile.user.beingFollowed}"/><span th:text="${profile.user.beingFollowed == 1 ? ' Seguidor' : ' Seguidores'}"/>
+        <a th:href="@{/{profileName}/followers(profileName = ${profile.user.profileName})}">
+            <span th:text="${profile.user.beingFollowed}"/><span th:text="${profile.user.beingFollowed == 1 ? ' Seguidor' : ' Seguidores'}"/>
+        </a>
         <br /><br />
 
         <div th:if="${#authentication.name} != ${profile.user.email}">
