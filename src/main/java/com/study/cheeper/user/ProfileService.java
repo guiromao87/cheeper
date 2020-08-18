@@ -60,7 +60,7 @@ public class ProfileService {
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        return userOptional.get().getBeingFollowed();
+        return userOptional.get().getFollowers();
     }
 
     public void follow(User follower, String profileName) {

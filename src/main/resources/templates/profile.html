@@ -28,7 +28,7 @@
         </a>&nbsp&nbsp
 
         <a th:href="@{/{profileName}/followers(profileName = ${profile.user.profileName})}">
-            <span th:text="${profile.user.beingFollowed}"/><span th:text="${profile.user.beingFollowed == 1 ? ' Seguidor' : ' Seguidores'}"/>
+            <span th:text="${profile.user.followers}"/><span th:text="${profile.user.followers == 1 ? ' Seguidor' : ' Seguidores'}"/>
         </a>
         <br /><br />
 
