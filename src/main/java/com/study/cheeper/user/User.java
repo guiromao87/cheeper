@@ -29,7 +29,15 @@ public class User {
             inverseJoinColumns=@JoinColumn(name="followed_id"))
     private Set<User> following = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="relationship",
+            joinColumns=@JoinColumn(name="followed_id"),
+            inverseJoinColumns=@JoinColumn(name="follower_id"))
+    private Set<User> followers = new HashSet<>();
+
     public Set<User> getFollowing() { return Collections.unmodifiableSet(following); }
+
+    public Set<User> getFollowers() { return Collections.unmodifiableSet(followers); }
 
     public boolean isFollowing(User profile) {
         return this.following.contains(profile);

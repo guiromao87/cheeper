@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class ProfileController {
@@ -35,6 +36,24 @@ public class ProfileController {
 
         ModelAndView mv = new ModelAndView("profile");
         mv.addObject("profile", profileService.profile(optional.get()));
+
+        return mv;
+    }
+
+    @GetMapping("/{profileName}/following")
+    public ModelAndView following(@PathVariable String profileName) {
+        Set<User> following = profileService.following(profileName);
+        ModelAndView mv = new ModelAndView("following");
+        mv.addObject("followingDto", FollowingDto.toFollowingsDto(following));
+
+        return mv;
+    }
+
+    @GetMapping("/{profileName}/followers")
+    public ModelAndView followers(@PathVariable String profileName) {
+        Set<User> followers = profileService.followers(profileName);
+        ModelAndView mv = new ModelAndView("followers");
+        mv.addObject("followersDto", FollowersDto.toFollowersDto(followers));
 
         return mv;
     }

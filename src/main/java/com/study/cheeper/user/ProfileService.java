@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProfileService {
@@ -46,6 +47,22 @@ public class ProfileService {
         }
     }
 
+    public Set<User> following(String profileName) {
+        Optional<User> userOptional = userRepository.findByProfileName(profileName);
+
+        if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
+
+        return userOptional.get().getFollowing();
+    }
+
+    public Set<User> followers(String profileName) {
+        Optional<User> userOptional = userRepository.findByProfileName(profileName);
+
+        if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
+
+        return userOptional.get().getFollowers();
+    }
+
     public void follow(User follower, String profileName) {
         Optional<User> beFollowed = userRepository.findByProfileName(profileName);
 
@@ -53,7 +70,6 @@ public class ProfileService {
 
         follower.follow(beFollowed.get());
         userRepository.save(follower);
-
     }
 
     public void unfollow(User follower, String profileName) {
