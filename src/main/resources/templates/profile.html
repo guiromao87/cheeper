@@ -22,7 +22,9 @@
     <section>
         <span th:text="${profile.numberOfCheeps}"/><span th:text="${profile.numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/> <br />
         <span th:text="${profile.user.bio}"/> <br />
-        <span>Seguindo</span> <span th:text="${profile.user.following}"/> <br /><br />
+        <span>Seguindo</span> <span th:text="${profile.user.following}"/>&nbsp&nbsp
+        <span th:text="${profile.user.beingFollowed}"/><span th:text="${profile.user.beingFollowed == 1 ? ' Seguidor' : ' Seguidores'}"/>
+        <br /><br />
 
         <div th:if="${#authentication.name} != ${profile.user.email}">
             <div th:if="${profile.follow} == false">

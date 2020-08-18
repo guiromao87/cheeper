@@ -9,6 +9,7 @@ public class UserDto {
     private String profileName;
     private String email;
     private int following;
+    private int beingFollowed;
     private boolean verifiedEmail;
 
     public UserDto(User user) {
@@ -19,6 +20,7 @@ public class UserDto {
         this.profileName = user.getProfileName();
         this.email = user.getEmail();
         this.following = user.getFollowing().size();
+        this.beingFollowed = user.getBeingFollowed().size();
         this.verifiedEmail = user.isVerifiedEmail();
     }
 
@@ -37,6 +39,8 @@ public class UserDto {
     public String getEmail() { return email; }
 
     public int getFollowing() { return following; }
+
+    public int getBeingFollowed() { return beingFollowed; }
 
     public boolean isVerifiedEmail() { return verifiedEmail; }
 }
