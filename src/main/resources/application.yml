@@ -24,8 +24,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${USER_EMAIL}
-    password: ${USER_PASSWORD}
+    username: estudosgit19@gmail.com
+    password: guiGIT2019
     protocol: smtp
     tls: true
     properties.mail.smtp:
@@ -37,10 +37,10 @@ url:
   bucket: https://cheeper.s3.amazonaws.com/
 email:
   code:
-    sender: ${USER_EMAIL}
+    sender: estudosgit19@gmail.com
 
 aws:
   s3:
-    access-key: ${ACCESS_KEY}
-    secret-key: ${SECRET_KEY}
-    region: ${REGION}
+    access-key: AKIA263MNNIWJM7CR6MZ
+    secret-key: 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
+    region: US_EAST_1
