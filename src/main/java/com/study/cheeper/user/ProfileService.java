@@ -9,6 +9,10 @@ import com.study.cheeper.cheep.CheepRepository;
 import com.study.cheeper.login.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.query.JpaEntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,8 +87,10 @@ public class ProfileService {
 
     public ProfileDto profile(User profile) {
         User current = loggedUser.asUser();
-        List<Cheep> cheepsByProfile = this.cheepRepository.findByProfileId(profile.getId());
-        ProfileDto profileDto = new ProfileDto(profile, cheepsByProfile);
+        Page<Cheep> cheepPage = this.cheepRepository.findByProfileId(profile.getId(),
+                PageRequest.of(0, 5, Sort.by("creation").descending()));
+
+        ProfileDto profileDto = new ProfileDto(profile, cheepPage);
 
         if(profile.isNotTheSameAs(current) && (current.isFollowing(profile)))
             profileDto.beingFollowed();

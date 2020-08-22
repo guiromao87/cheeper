@@ -20,9 +20,6 @@ public class CheepController {
 
     @PostMapping
     public String createNewCheep(NewCheepForm newCheepForm, RedirectAttributes attr) {
-
-
-
         Cheep cheep = newCheepForm.toCheep(loggedUser.asUser());
         this.cheepService.create(cheep);
 
