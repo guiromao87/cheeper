@@ -12,18 +12,20 @@ public class UserDto {
     private int followers;
     private boolean verifiedEmail;
 
-    public UserDto(User user, int numberOfIfollow, int numberOfFollowsMe) {
+    public UserDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.bio = user.getBio();
         this.image = user.getImage();
         this.profileName = user.getProfileName();
         this.email = user.getEmail();
-        this.following = 1;
-        this.followers = 1;
+        this.verifiedEmail = user.isVerifiedEmail();
+    }
+
+    public UserDto(User user, int numberOfIfollow, int numberOfFollowsMe) {
+        this(user);
         this.following = numberOfIfollow;
         this.followers = numberOfFollowsMe;
-        this.verifiedEmail = user.isVerifiedEmail();
     }
 
     public Integer getId() { return id; }
