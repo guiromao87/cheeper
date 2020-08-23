@@ -12,8 +12,8 @@ public class ProfileDto {
     private long numberOfCheeps;
     private boolean follow;
 
-    public ProfileDto(User profile, Page<Cheep> cheepPage) {
-        this.user = new UserDto(profile);
+    public ProfileDto(User profile, Page<Cheep> cheepPage, int numberOfIfollow, int numberOfFollowsMe) {
+        this.user = new UserDto(profile, numberOfIfollow, numberOfFollowsMe);
         this.cheeps = CheepDto.toCheepsDto(cheepPage.getContent());
         this.numberOfCheeps = cheepPage.getTotalElements();
     }

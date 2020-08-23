@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 public class ProfileController {
@@ -42,7 +42,7 @@ public class ProfileController {
 
     @GetMapping("/{profileName}/following")
     public ModelAndView following(@PathVariable String profileName) {
-        Set<User> following = profileService.following(profileName);
+        List<User> following = profileService.following(profileName);
         ModelAndView mv = new ModelAndView("following");
         mv.addObject("followingDto", FollowingDto.toFollowingsDto(following));
 
@@ -51,7 +51,7 @@ public class ProfileController {
 
     @GetMapping("/{profileName}/followers")
     public ModelAndView followers(@PathVariable String profileName) {
-        Set<User> followers = profileService.followers(profileName);
+        List<User> followers = profileService.followers(profileName);
         ModelAndView mv = new ModelAndView("followers");
         mv.addObject("followersDto", FollowersDto.toFollowersDto(followers));
 

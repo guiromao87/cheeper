@@ -12,14 +12,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.query.JpaEntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProfileService {
@@ -51,20 +49,22 @@ public class ProfileService {
         }
     }
 
-    public Set<User> following(String profileName) {
+    public List<User> following(String profileName) {
         Optional<User> userOptional = userRepository.findByProfileName(profileName);
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        return userOptional.get().getFollowing();
+        Page<User> pageOfFollowed = userRepository.followed(userOptional.get(), PageRequest.of(0, 5));
+        return pageOfFollowed.getContent();
     }
 
-    public Set<User> followers(String profileName) {
+    public List<User> followers(String profileName) {
         Optional<User> userOptional = userRepository.findByProfileName(profileName);
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        return userOptional.get().getFollowers();
+        Page<User> pageOfFollower = userRepository.follower(userOptional.get(), PageRequest.of(0, 5));
+        return pageOfFollower.getContent();
     }
 
     public void follow(User follower, String profileName) {
@@ -72,8 +72,7 @@ public class ProfileService {
 
         if(!beFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        follower.follow(beFollowed.get());
-        userRepository.save(follower);
+        userRepository.insert(follower.getId(), beFollowed.get().getId());
     }
 
     public void unfollow(User follower, String profileName) {
@@ -81,8 +80,7 @@ public class ProfileService {
 
         if(!beUnFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        follower.unfollow(beUnFollowed.get());
-        userRepository.save(follower);
+        userRepository.remove(follower.getId(), beUnFollowed.get().getId());
     }
 
     public ProfileDto profile(User profile) {
@@ -90,9 +88,14 @@ public class ProfileService {
         Page<Cheep> cheepPage = this.cheepRepository.findByProfileId(profile.getId(),
                 PageRequest.of(0, 5, Sort.by("creation").descending()));
 
-        ProfileDto profileDto = new ProfileDto(profile, cheepPage);
+        int numberOfIfollow = userRepository.numberOfIfollow(profile);
+        int numberOfFollowsMe = userRepository.numberOfFollowsMe(profile);
+        int count = userRepository.isFollowing(current.getId(), profile.getId());
 
-        if(profile.isNotTheSameAs(current) && (current.isFollowing(profile)))
+
+        ProfileDto profileDto = new ProfileDto(profile, cheepPage, numberOfIfollow, numberOfFollowsMe);
+
+        if(profile.isNotTheSameAs(current) && (count > 0))
             profileDto.beingFollowed();
 
         return profileDto;
