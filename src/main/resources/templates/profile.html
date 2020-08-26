@@ -59,10 +59,10 @@
         <br />
 
         <h3>Cheeps: </h3>
-        <ul style="list-style-type: none;" th:each="cheep : ${profile.cheeps}">
+        <ul style="list-style-type: none;" th:each="cheep : ${profile.cheepPage.content}">
             <li>
                 <div>
-                    <span th:text="${cheep.formattedCreation}" />:
+                    <span th:text="${cheep.creation}" />:
                     <b><span th:text="${cheep.message}" /></b>
                 </div>
             </li>

@@ -36,6 +36,8 @@ public class Cheep {
 
     public LocalDateTime getCreation() { return creation; }
 
+    public void setCreation(LocalDateTime creation) { this.creation = creation; }
+
     public User getProfile() { return profile; }
 
     public void setProfile(User profile) { this.profile = profile; }
