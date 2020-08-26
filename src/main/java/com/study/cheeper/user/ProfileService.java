@@ -72,7 +72,7 @@ public class ProfileService {
 
         if(!beFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        userRepository.insert(follower.getId(), beFollowed.get().getId());
+        userRepository.insert(follower, beFollowed.get());
     }
 
     public void unfollow(User follower, String profileName) {
@@ -80,7 +80,7 @@ public class ProfileService {
 
         if(!beUnFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        userRepository.unfollow(follower.getId(), beUnFollowed.get().getId());
+        userRepository.unfollow(follower, beUnFollowed.get());
     }
 
     public ProfileDto profile(User profile) {
@@ -90,7 +90,7 @@ public class ProfileService {
 
         int numberOfIfollow = userRepository.numberOfIfollow(profile);
         int numberOfFollowsMe = userRepository.numberOfFollowsMe(profile);
-        int count = userRepository.isFollowing(current.getId(), profile.getId());
+        int count = userRepository.isFollowing(current, profile);
 
 
         ProfileDto profileDto = new ProfileDto(profile, cheepPage, numberOfIfollow, numberOfFollowsMe);
