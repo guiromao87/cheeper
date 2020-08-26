@@ -83,15 +83,14 @@ public class ProfileService {
         userRepository.unfollow(follower, beUnFollowed.get());
     }
 
-    public ProfileDto profile(User profile) {
+    public ProfileDto profile(User profile, int page) {
         User current = loggedUser.asUser();
         Page<Cheep> cheepPage = this.cheepRepository.findByProfileId(profile.getId(),
-                PageRequest.of(0, 5, Sort.by("creation").descending()));
+                PageRequest.of(page, 5, Sort.by("creation").descending()));
 
         int numberOfIfollow = userRepository.numberOfIfollow(profile);
         int numberOfFollowsMe = userRepository.numberOfFollowsMe(profile);
         int count = userRepository.isFollowing(current, profile);
-
 
         ProfileDto profileDto = new ProfileDto(profile, cheepPage, numberOfIfollow, numberOfFollowsMe);
 
