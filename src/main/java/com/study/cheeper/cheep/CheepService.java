@@ -4,6 +4,8 @@ import com.study.cheeper.login.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CheepService {
 
@@ -18,9 +20,9 @@ public class CheepService {
     }
 
     public void delete(Long id) {
-        Cheep toDelete = this.cheepRepository.getOne(id);
+        Optional<Cheep> optionalCheep = this.cheepRepository.findById(id);
 
-        if(toDelete.isOwnedBy(loggedUser.asUser()))
-            cheepRepository.delete(toDelete);
+        if(!optionalCheep.isPresent() && optionalCheep.get().isOwnedBy(loggedUser.asUser()))
+            cheepRepository.delete(optionalCheep.get());
     }
 }

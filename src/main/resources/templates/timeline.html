@@ -27,16 +27,15 @@
     </section>
 
     <section id="timeline">
-        <ul style="list-style-type: none;" th:each="cheep : ${timeline.cheeps}">
+        <ul style="list-style-type: none;" th:each="elementPage : ${timeline.pageOfTimeline.content}">
             <li>
                 <div>
-                    <span th:text="${cheep.profile}" /><br />
-                    <span th:text="${cheep.formattedCreation}" />: <b><span th:text="${cheep.message}" /></b>
 
-
-                    <div th:if="${#authentication.name} == ${cheep.profileEmail}">
+                    <span th:text="${elementPage.name}" /><br />
+                    <span th:text="${elementPage.creation}" />: <b><span th:text="${elementPage.message}" /></b>
+                    <div th:if="${#authentication.name} == ${elementPage.email}">
                         <form th:action="@{/cheep}" th:method="delete">
-                            <input type="hidden" th:value="${cheep.id}" name="id" />
+                            <input type="hidden" th:value="${elementPage.cheepId}" name="id" />
                             <input type="submit" value="Excluir" />
                         </form>
                     </div>

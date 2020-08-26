@@ -1,6 +1,6 @@
 package com.study.cheeper.user;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FollowingDto {
@@ -26,7 +26,7 @@ public class FollowingDto {
         return bio;
     }
 
-    public static Set<FollowingDto> toFollowingsDto(Set<User> followings) {
-        return followings.stream().map(FollowingDto::new).collect(Collectors.toSet());
+    public static List<FollowingDto> toFollowingsDto(List<User> followings) {
+        return followings.stream().map(FollowingDto::new).collect(Collectors.toList());
     }
 }

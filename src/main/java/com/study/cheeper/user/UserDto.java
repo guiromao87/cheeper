@@ -19,9 +19,13 @@ public class UserDto {
         this.image = user.getImage();
         this.profileName = user.getProfileName();
         this.email = user.getEmail();
-        this.following = user.getFollowing().size();
-        this.followers = user.getFollowers().size();
         this.verifiedEmail = user.isVerifiedEmail();
+    }
+
+    public UserDto(User user, int numberOfIfollow, int numberOfFollowsMe) {
+        this(user);
+        this.following = numberOfIfollow;
+        this.followers = numberOfFollowsMe;
     }
 
     public Integer getId() { return id; }

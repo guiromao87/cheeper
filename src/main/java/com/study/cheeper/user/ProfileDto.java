@@ -2,19 +2,20 @@ package com.study.cheeper.user;
 
 import com.study.cheeper.cheep.Cheep;
 import com.study.cheeper.cheep.CheepDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public class ProfileDto {
     private UserDto user;
     private List<CheepDto> cheeps;
-    private int numberOfCheeps;
+    private long numberOfCheeps;
     private boolean follow;
 
-    public ProfileDto(User profile, List<Cheep> cheepsByProfile) {
-        this.user = new UserDto(profile);
-        this.cheeps = CheepDto.toCheepsDto(cheepsByProfile);
-        this.numberOfCheeps = cheepsByProfile.size();
+    public ProfileDto(User profile, Page<Cheep> cheepPage, int numberOfIfollow, int numberOfFollowsMe) {
+        this.user = new UserDto(profile, numberOfIfollow, numberOfFollowsMe);
+        this.cheeps = CheepDto.toCheepsDto(cheepPage.getContent());
+        this.numberOfCheeps = cheepPage.getTotalElements();
     }
 
     public void beingFollowed() { this.follow = true; }
@@ -23,7 +24,7 @@ public class ProfileDto {
 
     public List<CheepDto> getCheeps() { return cheeps; }
 
-    public int getNumberOfCheeps() { return numberOfCheeps; }
+    public long getNumberOfCheeps() { return numberOfCheeps; }
 
     public boolean isFollow() { return follow; }
 }

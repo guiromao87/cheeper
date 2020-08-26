@@ -2,12 +2,12 @@ package com.study.cheeper.user;
 
 import com.study.cheeper.login.UserSummary;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class User {
@@ -22,32 +22,6 @@ public class User {
     private LocalDate created = LocalDate.now();
     private String profileName;
     private boolean verifiedEmail;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="relationship",
-            joinColumns=@JoinColumn(name="follower_id"),
-            inverseJoinColumns=@JoinColumn(name="followed_id"))
-    private Set<User> following = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="relationship",
-            joinColumns=@JoinColumn(name="followed_id"),
-            inverseJoinColumns=@JoinColumn(name="follower_id"))
-    private Set<User> followers = new HashSet<>();
-
-    public Set<User> getFollowing() { return Collections.unmodifiableSet(following); }
-
-    public Set<User> getFollowers() { return Collections.unmodifiableSet(followers); }
-
-    public boolean isFollowing(User profile) {
-        return this.following.contains(profile);
-    }
-
-    public void follow(User toBeFollowed) {
-        this.following.add(toBeFollowed);
-    }
-
-    public void unfollow(User followed) { this.following.remove(followed); }
 
     public Integer getId() { return id; }
 
