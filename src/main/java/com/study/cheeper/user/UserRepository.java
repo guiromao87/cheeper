@@ -16,11 +16,10 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
     Optional<User> findByProfileName(String profileName);
 
     @Query("select f.followed from Follower f where f.follower = ?1")
-    Page<User> followed(User follower, Pageable pageable);
+    Page<User> followeds(User follower, Pageable pageable);
 
     @Query("select f.follower from Follower f where f.followed = ?1")
-    Page<User> follower(User followed, Pageable pageable);
-
+    Page<User> followers(User followed, Pageable pageable);
 
     @Transactional
     @Modifying
@@ -30,9 +29,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
     @Transactional
     @Modifying
     @Query(value = "delete from relationship where follower_id = :follower_id and followed_id = :followed_id", nativeQuery = true)
-    void remove(@Param("follower_id") Integer followerId, @Param("followed_id") Integer followedId);
+    void unfollow(@Param("follower_id") Integer followerId, @Param("followed_id") Integer followedId);
 
-    //trocar para jpql
     @Query(value = "select count(*) from relationship where follower_id = :follower_id and followed_id = :followed_id", nativeQuery = true)
     int isFollowing(@Param("follower_id") int current, @Param("followed_id")int profile);
 

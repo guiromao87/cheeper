@@ -54,7 +54,7 @@ public class ProfileService {
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        Page<User> pageOfFollowed = userRepository.followed(userOptional.get(), PageRequest.of(0, 5));
+        Page<User> pageOfFollowed = userRepository.followeds(userOptional.get(), PageRequest.of(0, 5));
         return pageOfFollowed.getContent();
     }
 
@@ -63,7 +63,7 @@ public class ProfileService {
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        Page<User> pageOfFollower = userRepository.follower(userOptional.get(), PageRequest.of(0, 5));
+        Page<User> pageOfFollower = userRepository.followers(userOptional.get(), PageRequest.of(0, 5));
         return pageOfFollower.getContent();
     }
 
@@ -80,7 +80,7 @@ public class ProfileService {
 
         if(!beUnFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        userRepository.remove(follower.getId(), beUnFollowed.get().getId());
+        userRepository.unfollow(follower.getId(), beUnFollowed.get().getId());
     }
 
     public ProfileDto profile(User profile) {
