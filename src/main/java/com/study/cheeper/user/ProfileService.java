@@ -49,21 +49,21 @@ public class ProfileService {
         }
     }
 
-    public List<User> following(String profileName) {
+    public List<User> following(String profileName, int page) {
         Optional<User> userOptional = userRepository.findByProfileName(profileName);
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        Page<User> pageOfFollowed = userRepository.followeds(userOptional.get(), PageRequest.of(0, 5));
+        Page<User> pageOfFollowed = userRepository.followeds(userOptional.get(), PageRequest.of(page, 5));
         return pageOfFollowed.getContent();
     }
 
-    public List<User> followers(String profileName) {
+    public List<User> followers(String profileName, int page) {
         Optional<User> userOptional = userRepository.findByProfileName(profileName);
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        Page<User> pageOfFollower = userRepository.followers(userOptional.get(), PageRequest.of(0, 5));
+        Page<User> pageOfFollower = userRepository.followers(userOptional.get(), PageRequest.of(page, 5));
         return pageOfFollower.getContent();
     }
 

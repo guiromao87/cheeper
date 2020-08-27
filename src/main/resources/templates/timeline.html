@@ -7,7 +7,7 @@
     <header>
         <p>
             <span>Olá </span>
-            <a th:href="@{/{profileName}(profileName = ${timeline.profile.profileName})}">
+            <a th:href="@{/{profileName}?page=1(profileName = ${timeline.profile.profileName})}">
                 <span th:text="${timeline.profile.name}" />
             </a>
             (<span th:text="${timeline.profile.formattedProfileName}" />)
