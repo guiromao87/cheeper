@@ -13,6 +13,23 @@ public interface CheepRepository extends PagingAndSortingRepository<Cheep, Long>
     
     Page<Cheep> findByProfileId(Integer id, Pageable pageable);
 
-    @Query(value = "select u.name as name, u.email as email, c.id as cheepId, c.message as message, c.creation as creation from user u inner join cheep c on c.profile_id = u.id left join relationship r on r.followed_id = u.id where r.follower_id = :id UNION select u.name as name, u.email as email,c.id as cheepId, c.message as message, c.creation as creation from user u inner join cheep c on c.profile_id = u.id where u.id = :id", nativeQuery = true)
+    @Query(value =
+            "select " +
+                "u.name as name, " +
+                "u.email as email, " +
+                "c.id as cheepId, " +
+                "c.message as message, " +
+                "c.creation as creation " +
+            "from user u inner join cheep c on c.profile_id = u.id " +
+            "left join relationship r on r.followed_id = u.id where r.follower_id = :id " +
+            "UNION " +
+            "select " +
+                "u.name as name, " +
+                "u.email as email," +
+                "c.id as cheepId, " +
+                "c.message as message, " +
+                "c.creation as creation " +
+            "from user u inner join cheep c on c.profile_id = u.id " +
+            "where u.id = :id order by creation desc", nativeQuery = true)
     List<TimelineProjection> allCheepsWhomIFollow(@Param("id") int id);
 }
