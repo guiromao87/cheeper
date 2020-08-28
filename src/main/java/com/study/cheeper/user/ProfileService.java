@@ -72,7 +72,7 @@ public class ProfileService {
 
         if(!beFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        userRepository.insert(follower, beFollowed.get());
+        userRepository.follow(follower, beFollowed.get());
     }
 
     public void unfollow(User follower, String profileName) {

@@ -24,7 +24,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
     @Transactional
     @Modifying
     @Query(value = "insert into relationship(follower_id, followed_id) values (:follower_id, :followed_id)", nativeQuery = true)
-    void insert(@Param("follower_id") User followerId, @Param("followed_id") User followedId);
+    void follow(@Param("follower_id") User followerId, @Param("followed_id") User followedId);
 
     @Transactional
     @Modifying
