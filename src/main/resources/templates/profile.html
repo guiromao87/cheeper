@@ -23,11 +23,11 @@
         <span th:text="${profile.numberOfCheeps}"/><span th:text="${profile.numberOfCheeps == 1 ? ' cheep' : ' cheeps'}"/> <br />
         <span th:text="${profile.user.bio}"/> <br />
 
-        <a th:href="@{/{profileName}/following(profileName = ${profile.user.profileName})}">
+        <a th:href="@{/{profileName}/following?page=1(profileName = ${profile.user.profileName})}">
             <span>Seguindo</span> <span th:text="${profile.user.following}"/>
         </a>&nbsp&nbsp
 
-        <a th:href="@{/{profileName}/followers(profileName = ${profile.user.profileName})}">
+        <a th:href="@{/{profileName}/followers?page=1(profileName = ${profile.user.profileName})}">
             <span th:text="${profile.user.followers}"/><span th:text="${profile.user.followers == 1 ? ' Seguidor' : ' Seguidores'}"/>
         </a>
         <br /><br />
@@ -59,10 +59,10 @@
         <br />
 
         <h3>Cheeps: </h3>
-        <ul style="list-style-type: none;" th:each="cheep : ${profile.cheeps}">
+        <ul style="list-style-type: none;" th:each="cheep : ${profile.cheepPage.content}">
             <li>
                 <div>
-                    <span th:text="${cheep.formattedCreation}" />:
+                    <span th:text="${cheep.creation}" />:
                     <b><span th:text="${cheep.message}" /></b>
                 </div>
             </li>

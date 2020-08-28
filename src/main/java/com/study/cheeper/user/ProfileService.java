@@ -49,21 +49,21 @@ public class ProfileService {
         }
     }
 
-    public List<User> following(String profileName) {
+    public List<User> following(String profileName, int page) {
         Optional<User> userOptional = userRepository.findByProfileName(profileName);
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        Page<User> pageOfFollowed = userRepository.followed(userOptional.get(), PageRequest.of(0, 5));
+        Page<User> pageOfFollowed = userRepository.followeds(userOptional.get(), PageRequest.of(page, 5));
         return pageOfFollowed.getContent();
     }
 
-    public List<User> followers(String profileName) {
+    public List<User> followers(String profileName, int page) {
         Optional<User> userOptional = userRepository.findByProfileName(profileName);
 
         if(!userOptional.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        Page<User> pageOfFollower = userRepository.follower(userOptional.get(), PageRequest.of(0, 5));
+        Page<User> pageOfFollower = userRepository.followers(userOptional.get(), PageRequest.of(page, 5));
         return pageOfFollower.getContent();
     }
 
@@ -72,7 +72,7 @@ public class ProfileService {
 
         if(!beFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        userRepository.insert(follower.getId(), beFollowed.get().getId());
+        userRepository.insert(follower, beFollowed.get());
     }
 
     public void unfollow(User follower, String profileName) {
@@ -80,18 +80,17 @@ public class ProfileService {
 
         if(!beUnFollowed.isPresent()) throw new UserNotExistsException("Este usuário não existe");
 
-        userRepository.remove(follower.getId(), beUnFollowed.get().getId());
+        userRepository.unfollow(follower, beUnFollowed.get());
     }
 
-    public ProfileDto profile(User profile) {
+    public ProfileDto profile(User profile, int page) {
         User current = loggedUser.asUser();
         Page<Cheep> cheepPage = this.cheepRepository.findByProfileId(profile.getId(),
-                PageRequest.of(0, 5, Sort.by("creation").descending()));
+                PageRequest.of(page, 5, Sort.by("creation").descending()));
 
         int numberOfIfollow = userRepository.numberOfIfollow(profile);
         int numberOfFollowsMe = userRepository.numberOfFollowsMe(profile);
-        int count = userRepository.isFollowing(current.getId(), profile.getId());
-
+        int count = userRepository.isFollowing(current, profile);
 
         ProfileDto profileDto = new ProfileDto(profile, cheepPage, numberOfIfollow, numberOfFollowsMe);
 

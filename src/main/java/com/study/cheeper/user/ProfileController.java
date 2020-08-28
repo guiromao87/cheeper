@@ -28,21 +28,21 @@ public class ProfileController {
     private VerifyEmailService verifyEmailService;
 
     @GetMapping("/{profileName}")
-    public ModelAndView profile(@PathVariable("profileName") String profileName) {
+    public ModelAndView profile(@PathVariable("profileName") String profileName, @RequestParam int page) {
         Optional<User> optional = this.userRepository.findByProfileName(profileName);
 
         if(!optional.isPresent())
             return new ModelAndView("404");
 
         ModelAndView mv = new ModelAndView("profile");
-        mv.addObject("profile", profileService.profile(optional.get()));
+        mv.addObject("profile", profileService.profile(optional.get(), page - 1));
 
         return mv;
     }
 
     @GetMapping("/{profileName}/following")
-    public ModelAndView following(@PathVariable String profileName) {
-        List<User> following = profileService.following(profileName);
+    public ModelAndView following(@PathVariable String profileName, int page) {
+        List<User> following = profileService.following(profileName, page - 1);
         ModelAndView mv = new ModelAndView("following");
         mv.addObject("followingDto", FollowingDto.toFollowingsDto(following));
 
@@ -50,8 +50,8 @@ public class ProfileController {
     }
 
     @GetMapping("/{profileName}/followers")
-    public ModelAndView followers(@PathVariable String profileName) {
-        List<User> followers = profileService.followers(profileName);
+    public ModelAndView followers(@PathVariable String profileName, int page) {
+        List<User> followers = profileService.followers(profileName, page - 1);
         ModelAndView mv = new ModelAndView("followers");
         mv.addObject("followersDto", FollowersDto.toFollowersDto(followers));
 

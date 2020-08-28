@@ -4,17 +4,15 @@ import com.study.cheeper.cheep.Cheep;
 import com.study.cheeper.cheep.CheepDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public class ProfileDto {
     private UserDto user;
-    private List<CheepDto> cheeps;
+    private Page<CheepDto> cheepPage;
     private long numberOfCheeps;
     private boolean follow;
 
     public ProfileDto(User profile, Page<Cheep> cheepPage, int numberOfIfollow, int numberOfFollowsMe) {
         this.user = new UserDto(profile, numberOfIfollow, numberOfFollowsMe);
-        this.cheeps = CheepDto.toCheepsDto(cheepPage.getContent());
+        this.cheepPage = CheepDto.toCheepDtoPage(cheepPage);
         this.numberOfCheeps = cheepPage.getTotalElements();
     }
 
@@ -22,7 +20,7 @@ public class ProfileDto {
 
     public UserDto getUser() { return user; }
 
-    public List<CheepDto> getCheeps() { return cheeps; }
+    public Page<CheepDto> getCheepPage() { return cheepPage; }
 
     public long getNumberOfCheeps() { return numberOfCheeps; }
 
