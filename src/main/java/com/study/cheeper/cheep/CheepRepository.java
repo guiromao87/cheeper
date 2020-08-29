@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface CheepRepository extends PagingAndSortingRepository<Cheep, Long> {
     
     Page<Cheep> findByProfileId(Integer id, Pageable pageable);
@@ -30,6 +28,12 @@ public interface CheepRepository extends PagingAndSortingRepository<Cheep, Long>
                 "c.message as message, " +
                 "c.creation as creation " +
             "from user u inner join cheep c on c.profile_id = u.id " +
-            "where u.id = :id order by creation desc", nativeQuery = true)
-    List<TimelineProjection> allCheepsWhomIFollow(@Param("id") int id);
+            "where u.id = :id order by creation desc", nativeQuery = true,
+            countQuery =
+                "select sum(cheeps) from (" +
+                    "select count(*) as cheeps from cheep c inner join relationship r on r.followed_id = c.profile_id " +
+                        "where r.follower_id = :id " +
+                    "UNION " +
+                    "select count(*) as cheeps from cheep where profile_id = :id) as total;")
+    Page<TimelineProjection> allCheepsWhomIFollow(@Param("id") int id, Pageable pageable);
 }

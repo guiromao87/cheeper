@@ -6,7 +6,7 @@
 <body>
     <header>
         <div>
-            <a th:href="@{/home}">home</a>
+            <a th:href="@{/home?page=1}">home</a>
         </div>
         <br />
         <div th:if="${#authentication.name} == ${profile.user.email}">
