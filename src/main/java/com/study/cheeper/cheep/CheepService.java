@@ -22,7 +22,7 @@ public class CheepService {
     public void delete(Long id) {
         Optional<Cheep> optionalCheep = this.cheepRepository.findById(id);
 
-        if(!optionalCheep.isPresent() && optionalCheep.get().isOwnedBy(loggedUser.asUser()))
+        if(optionalCheep.isPresent() && optionalCheep.get().isOwnedBy(loggedUser.asUser()))
             cheepRepository.delete(optionalCheep.get());
     }
 }
