@@ -13,7 +13,7 @@ class TimelineController {
     private TimelineService timelineService;
 
     @GetMapping(value = {"/", "/home"})
-    public ModelAndView timeline(@RequestParam(defaultValue = "1") int page) {
+    public ModelAndView timeline(@RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mv = new ModelAndView("timeline");
 
         mv.addObject("timeline", timelineService.createTimeline(page - 1));
