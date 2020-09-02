@@ -7,7 +7,7 @@
     <header>
         <p>
             <span>Olá </span>
-            <a th:href="@{/{profileName}?page=1(profileName = ${timeline.profile.profileName})}">
+            <a th:href="@{/{profileName}(profileName = ${timeline.profile.profileName})}">
                 <span th:text="${timeline.profile.name}" />
             </a>
             (<span th:text="${timeline.profile.formattedProfileName}" />)
@@ -27,7 +27,7 @@
     </section>
 
     <section id="timeline">
-        <ul style="list-style-type: none;" th:each="elementPage : ${timeline.pageOfTimeline}">
+        <ul style="list-style-type: none;" th:each="elementPage : ${timeline.pageOfTimeline.content}">
             <li>
                 <div>
 
@@ -46,6 +46,7 @@
     <br />
     <br />
 
+    Total de cheeps que vejo: <span th:text="${timeline.pageOfTimeline.totalElements}" /> <br />
     <footer>
         <a th:href="@{/logout}">sair</a>
     </footer>

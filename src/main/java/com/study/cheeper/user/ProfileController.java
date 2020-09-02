@@ -28,7 +28,8 @@ public class ProfileController {
     private VerifyEmailService verifyEmailService;
 
     @GetMapping("/{profileName}")
-    public ModelAndView profile(@PathVariable("profileName") String profileName, @RequestParam int page) {
+    public ModelAndView profile(@PathVariable("profileName") String profileName,
+                                @RequestParam(required = false, defaultValue = "1") int page) {
         Optional<User> optional = this.userRepository.findByProfileName(profileName);
 
         if(!optional.isPresent())
@@ -41,7 +42,8 @@ public class ProfileController {
     }
 
     @GetMapping("/{profileName}/following")
-    public ModelAndView following(@PathVariable String profileName, int page) {
+    public ModelAndView following(@PathVariable String profileName,
+                                  @RequestParam(required = false, defaultValue = "1") int page) {
         List<User> following = profileService.following(profileName, page - 1);
         ModelAndView mv = new ModelAndView("following");
         mv.addObject("followingDto", FollowingDto.toFollowingsDto(following));
@@ -50,7 +52,8 @@ public class ProfileController {
     }
 
     @GetMapping("/{profileName}/followers")
-    public ModelAndView followers(@PathVariable String profileName, int page) {
+    public ModelAndView followers(@PathVariable String profileName,
+                                  @RequestParam(required = false, defaultValue = "1") int page) {
         List<User> followers = profileService.followers(profileName, page - 1);
         ModelAndView mv = new ModelAndView("followers");
         mv.addObject("followersDto", FollowersDto.toFollowersDto(followers));

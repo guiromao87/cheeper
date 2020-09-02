@@ -24,13 +24,13 @@ public class CheepController {
         this.cheepService.create(cheep);
 
         attr.addFlashAttribute("success", "Cheep cadastrado com sucesso!");
-        return "redirect:home";
+        return "redirect:home?page=1";
     }
 
     @DeleteMapping
     public String delete(Long id) {
         this.cheepService.delete(id);
-        return "redirect:home";
+        return "redirect:home?page=1";
     }
 
 }
